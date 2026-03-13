@@ -3,642 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NITOR - National Institute of Traumatology & Orthopaedic Rehabilitation</title>
+    <title>NITOR - National Institute of Traumatology and Orthopaedic Rehabilitation</title>
+    <meta name="description" content="NITOR provides advanced orthopaedic and trauma care with modern facilities and compassionate treatment.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <h1>NITOR</h1>
-                <p>National Institute of Traumatology & Orthopaedic Rehabilitation</p>
-            </div>
-            
-            <div class="nav-menu">
-                <button class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#home" onclick="setLanguage('en')">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#about">About <i class="fas fa-chevron-down"></i></a>
-                        <div class="dropdown-content">
-                            <a href="#about-nitor">About NITOR</a>
-                            <a href="#director">Director's Message</a>
-                            <a href="#history">History & Mission</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#services">Services <i class="fas fa-chevron-down"></i></a>
-                        <div class="dropdown-content">
-                            <a href="#departments">Departments</a>
-                            <a href="#specialties">Specialties</a>
-                            <a href="#emergency">Emergency Care</a>
-                        </div>
-                    </li>
-                    <li><a href="#doctors">Our Team</a></li>
-                    <li><a href="#appointment">Appointment</a></li>
-                    <li><a href="#news">News & Updates</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li class="lang-toggle">
-                        <button onclick="toggleLanguage()" class="lang-btn">বাংলা</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Emergency Help Banner -->
-    <section class="emergency-banner" aria-label="Emergency help information">
-        <div class="container emergency-banner-content">
-            <div class="emergency-banner-text">
-                <i class="fas fa-triangle-exclamation"></i>
-                <p>Emergency Help Available 24/7</p>
-            </div>
-            <a href="tel:+880255058902" class="emergency-call-btn" aria-label="Call emergency number +88-02-55058902">
-                <i class="fas fa-phone-volume"></i>
-                <span>+88-02-55058902</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="floating-icons" aria-hidden="true">
-            <span class="float-icon icon-1"><i class="fas fa-heartbeat"></i></span>
-            <span class="float-icon icon-2"><i class="fas fa-stethoscope"></i></span>
-            <span class="float-icon icon-3"><i class="fas fa-briefcase-medical"></i></span>
-            <span class="float-icon icon-4"><i class="fas fa-user-doctor"></i></span>
-        </div>
-
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <span class="hero-badge">Trusted Advanced Healthcare Campus</span>
-                <h2 class="hero-title">Premium Trauma, Orthopedic, and Rehabilitation Care</h2>
-                <p class="hero-lead">NITOR delivers expert-led treatment, rapid emergency response, and modern recovery pathways for every patient journey.</p>
-
-                <div class="hero-buttons">
-                    <button class="btn btn-primary hero-cta" onclick="scrollToAppointment()">Book Appointment</button>
-                    <button class="btn btn-secondary hero-cta-outline" onclick="callEmergency()">Emergency: +88-02-55058902</button>
-                </div>
-
-                <div class="hero-stats" aria-label="Hospital statistics highlights">
-                    <div class="stat-card hero-stat-card">
-                        <h3>120+</h3>
-                        <p>Specialist Doctors</p>
-                    </div>
-                    <div class="stat-card hero-stat-card">
-                        <h3>35000+</h3>
-                        <p>Patients Served Yearly</p>
-                    </div>
-                    <div class="stat-card hero-stat-card">
-                        <h3>900+</h3>
-                        <p>Beds & Recovery Units</p>
-                    </div>
-                </div>
-            </div>
-
-            <aside class="hero-panel" aria-label="Hospital quality highlights">
-                <h3>Why Patients Choose NITOR</h3>
-                <ul>
-                    <li><i class="fas fa-check-circle"></i> 24/7 trauma and emergency teams</li>
-                    <li><i class="fas fa-check-circle"></i> Multidisciplinary specialist consultation</li>
-                    <li><i class="fas fa-check-circle"></i> Modern diagnostics and surgical support</li>
-                    <li><i class="fas fa-check-circle"></i> Recovery-first rehabilitation programs</li>
-                </ul>
-            </aside>
-        </div>
-
-        <a href="#services" class="scroll-indicator" aria-label="Scroll to services section">
-            <span></span>
-        </a>
-    </section>
-
-    <!-- Hospital Statistics Counter -->
-    <section class="hospital-stats" id="hospital-stats">
-        <div class="container">
-            <h2>Hospital Statistics</h2>
-            <p class="section-subtitle">Transparent impact metrics from our care network</p>
-
-            <div class="hospital-stats-grid">
-                <article class="hospital-stat-card">
-                    <div class="hospital-stat-icon"><i class="fas fa-user-doctor"></i></div>
-                    <h3><span class="counter-value" data-counter-target="150" data-counter-suffix="+">0</span></h3>
-                    <p>Doctors</p>
-                </article>
-
-                <article class="hospital-stat-card">
-                    <div class="hospital-stat-icon"><i class="fas fa-bed"></i></div>
-                    <h3><span class="counter-value" data-counter-target="500" data-counter-suffix="+">0</span></h3>
-                    <p>Beds</p>
-                </article>
-
-                <article class="hospital-stat-card">
-                    <div class="hospital-stat-icon"><i class="fas fa-hospital-user"></i></div>
-                    <h3><span class="counter-value" data-counter-target="1000000" data-counter-format="comma" data-counter-suffix="+">0</span></h3>
-                    <p>Patients Treated</p>
-                </article>
-
-                <article class="hospital-stat-card">
-                    <div class="hospital-stat-icon"><i class="fas fa-ambulance"></i></div>
-                    <h3><span class="counter-value" data-counter-target="24" data-counter-suffix="/7">0</span></h3>
-                    <p>Emergency Units</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <p class="section-subtitle">Comprehensive healthcare solutions for trauma and orthopedic care</p>
-            
-            <div class="services-grid">
-                <div class="service-card">
-                    <i class="fas fa-ambulance"></i>
-                    <h3>Emergency Care</h3>
-                    <p>24/7 emergency services with advanced trauma care facilities</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-heartbeat"></i>
-                    <h3>OPD Services</h3>
-                    <p>Out-patient department with experienced specialists</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-hospital-user"></i>
-                    <h3>In-patient Care</h3>
-                    <p>Modern ward facilities with round-the-clock nursing care</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-crutch"></i>
-                    <h3>Rehabilitation</h3>
-                    <p>Comprehensive physiotherapy and rehabilitation programs</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-x-ray"></i>
-                    <h3>Diagnostic Services</h3>
-                    <p>Advanced imaging and pathology services</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-flask"></i>
-                    <h3>Laboratory Services</h3>
-                    <p>Modern diagnostic laboratory and transfusion medicine</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Departments Section -->
-    <section class="departments" id="departments">
-        <div class="container">
-            <h2>Our Departments</h2>
-            <p class="section-subtitle">Specialized medical departments with expert teams</p>
-            
-            <div class="departments-grid">
-                <div class="dept-card">
-                    <h3>Orthopedic Surgery</h3>
-                    <p>Treatment of bone, joint and muscle disorders with advanced surgical techniques</p>
-                    <a href="#" onclick="showModal('orthopedics')" class="read-more">Learn More →</a>
-                </div>
-                <div class="dept-card">
-                    <h3>Trauma Surgery</h3>
-                    <p>Emergency surgical care for trauma patients with 24/7 availability</p>
-                    <a href="#" onclick="showModal('trauma')" class="read-more">Learn More →</a>
-                </div>
-                <div class="dept-card">
-                    <h3>Physical Medicine & Rehabilitation</h3>
-                    <p>Rehabilitation and physical therapy services for patient recovery</p>
-                    <a href="#" onclick="showModal('rehabilitation')" class="read-more">Learn More →</a>
-                </div>
-                <div class="dept-card">
-                    <h3>Radiology & Imaging</h3>
-                    <p>Advanced diagnostic imaging services including CT, MRI, and X-ray</p>
-                    <a href="#" onclick="showModal('radiology')" class="read-more">Learn More →</a>
-                </div>
-                <div class="dept-card">
-                    <h3>Pathology</h3>
-                    <p>Clinical pathology and laboratory services for accurate diagnosis</p>
-                    <a href="#" onclick="showModal('pathology')" class="read-more">Learn More →</a>
-                </div>
-                <div class="dept-card">
-                    <h3>Anesthesiology</h3>
-                    <p>Anesthetic management and pain relief services for all procedures</p>
-                    <a href="#" onclick="showModal('anesthesia')" class="read-more">Learn More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Doctors/Team Section -->
-    <section class="doctors" id="doctors">
-        <div class="container">
-            <h2>Our Medical Team</h2>
-            <p class="section-subtitle">Meet our specialists with deep experience in trauma, surgery, and rehabilitation care</p>
-
-            <div class="doctors-grid" id="doctorProfilesGrid" aria-live="polite"></div>
-        </div>
-    </section>
-
-    <!-- Appointment Section -->
-    <section class="appointment" id="appointment">
-        <div class="container">
-            <div class="appointment-wrapper">
-                <div class="appointment-form">
-                    <h2>Book Your Appointment</h2>
-                    <p>Get registered and schedule your consultation with our specialists</p>
-                    
-                    <form id="appointmentForm" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="patientName">Patient Name</label>
-                                <input id="patientName" name="patientName" type="text" placeholder="Enter patient name" autocomplete="name" required>
-                                <small class="field-error" id="patientNameError"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="phoneNumber">Phone Number</label>
-                                <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="e.g. 01712345678" autocomplete="tel" required>
-                                <small class="field-error" id="phoneNumberError"></small>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="department">Department</label>
-                                <select id="department" name="department" required>
-                                    <option value="">Select Department</option>
-                                    <option value="Orthopedic Surgery">Orthopedic Surgery</option>
-                                    <option value="Trauma Surgery">Trauma Surgery</option>
-                                    <option value="Physical Medicine & Rehabilitation">Physical Medicine & Rehabilitation</option>
-                                    <option value="Cardiology">Cardiology</option>
-                                    <option value="General Medicine">General Medicine</option>
-                                </select>
-                                <small class="field-error" id="departmentError"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="doctor">Doctor</label>
-                                <select id="doctor" name="doctor" required disabled>
-                                    <option value="">Select Department First</option>
-                                </select>
-                                <small class="field-error" id="doctorError"></small>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="appointmentDate">Date</label>
-                                <input id="appointmentDate" name="appointmentDate" type="date" required>
-                                <small class="field-error" id="appointmentDateError"></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="appointmentTime">Time</label>
-                                <input id="appointmentTime" name="appointmentTime" type="time" required>
-                                <small class="field-error" id="appointmentTimeError"></small>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Book Appointment</button>
-                    </form>
-                    <div id="appointmentConfirmation" class="confirmation-message" role="status" aria-live="polite"></div>
-                </div>
-                
-                <div class="appointment-info">
-                    <h3>Why Choose NITOR?</h3>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Expert medical professionals</li>
-                        <li><i class="fas fa-check"></i> State-of-the-art facilities</li>
-                        <li><i class="fas fa-check"></i> 24/7 Emergency services</li>
-                        <li><i class="fas fa-check"></i> Affordable healthcare</li>
-                        <li><i class="fas fa-check"></i> Patient-centered care</li>
-                        <li><i class="fas fa-check"></i> Quick appointment scheduling</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- News Section -->
-    <section class="news" id="news">
-        <div class="container">
-            <h2>Latest News & Updates</h2>
-            <p class="section-subtitle">Stay updated with NITOR's latest news and announcements</p>
-            
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="news-image">
-                        <img src="https://via.placeholder.com/300x200?text=Facilitation+Program" alt="Facilitation Program" style="width: 100%; height: 200px; object-fit: cover;">
-                    </div>
-                    <div class="news-content">
-                        <span class="news-date">Aug 21, 2025</span>
-                        <h3>21st Facilitation Program of Newly Passed M.S. Orthopedic Surgeons</h3>
-                        <p>9 out of 10 students successfully passed in the July 2025 session</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-                
-                <div class="news-card">
-                    <div class="news-image">
-                        <img src="https://via.placeholder.com/300x200?text=Banking+Services" alt="Banking Services" style="width: 100%; height: 200px; object-fit: cover;">
-                    </div>
-                    <div class="news-content">
-                        <span class="news-date">Aug 10, 2025</span>
-                        <h3>Bangladesh Agriculture Bank Fee Collection Booth Inauguration</h3>
-                        <p>New fee collection facility opened for patient convenience</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-                
-                <div class="news-card">
-                    <div class="news-image">
-                        <img src="https://via.placeholder.com/300x200?text=July+Celebration" alt="July Celebration" style="width: 100%; height: 200px; object-fit: cover;">
-                    </div>
-                    <div class="news-content">
-                        <span class="news-date">Aug 5, 2025</span>
-                        <h3>July Resurrection Day Celebration 2025</h3>
-                        <p>Victory Procession and community engagement program held successfully</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="news-footer">
-                <a href="#" onclick="showAllNews()" class="btn btn-secondary">View All News</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2>Patient Testimonials</h2>
-            <p class="section-subtitle">What our patients say about NITOR</p>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"NITOR provided excellent trauma care. The doctors were professional and the staff caring."</p>
-                    <h4>- Mr. Ahmed Hassan</h4>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"Fantastic rehabilitation program. I made a complete recovery thanks to NITOR team."</p>
-                    <h4>- Mrs. Nasrin Begum</h4>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"Best orthopedic hospital in Dhaka. Highly recommended to all who need expert care."</p>
-                    <h4>- Mr. Karim Khan</h4>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <p class="section-subtitle">Find answers to common questions about NITOR</p>
-            
-            <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <h3>How do I book an appointment?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>You can book an appointment using the appointment form on this website, or call us directly at +88-02-55058902</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <h3>What are your emergency services available?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We provide 24/7 emergency services for trauma, orthopedic injuries, and related conditions with experienced surgeons on-call always.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <h3>Do you accept all insurance plans?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We accept most insurance plans. Please contact the billing department at +88-02-55058903 for specific plan details.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <h3>What is your visiting hours?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>OPD visiting hours: 8:00 AM - 8:00 PM daily. Emergency services: 24/7. In-patient visiting: 4:00 PM - 8:00 PM.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <h3>Can I get my reports online?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, you can collect your medical reports and test results from the hospital. Contact our record department for details.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Notice Board Section -->
-    <section class="notices" id="notices">
-        <div class="container">
-            <h2>Notice Board</h2>
-            <p class="section-subtitle">Important announcements and updates</p>
-            
-            <div class="notices-list">
-                <div class="notice-item">
-                    <span class="notice-date">2026-01</span>
-                    <h4>BSc in Physiotherapy Admission 2025-26</h4>
-                    <a href="#" class="notice-link">
-                        <i class="fas fa-file-pdf"></i> Download Notice
-                    </a>
-                </div>
-                
-                <div class="notice-item">
-                    <span class="notice-date">2025-06</span>
-                    <h4>Eid Ul Adha Roster June 2025</h4>
-                    <a href="#" class="notice-link">
-                        <i class="fas fa-file-pdf"></i> Download Roster
-                    </a>
-                </div>
-                
-                <div class="notice-item">
-                    <span class="notice-date">2025-05</span>
-                    <h4>Doctor Placement Schedule May 2025</h4>
-                    <a href="#" class="notice-link">
-                        <i class="fas fa-file-pdf"></i> Download Schedule
-                    </a>
-                </div>
-                
-                <div class="notice-item">
-                    <span class="notice-date">2025-05</span>
-                    <h4>BSc in Physiotherapy Admission Results</h4>
-                    <a href="#" class="notice-link">
-                        <i class="fas fa-file-pdf"></i> View Results
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <p class="section-subtitle">We're here to help and answer any questions you might have</p>
-            
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h3>Address</h3>
-                        <p>Sher-E-Bangla Nagar<br>Dhaka-1207, Bangladesh</p>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <i class="fas fa-phone"></i>
-                        <h3>Phone</h3>
-                        <p>+88-02-55058902</p>
-                        <p>+88-02-55058903</p>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p><a href="mailto:nitor@hospi.dghs.gov.bd">nitor@hospi.dghs.gov.bd</a></p>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <i class="fas fa-clock"></i>
-                        <h3>Hours</h3>
-                        <p>Emergency: 24/7<br>OPD: 8:00 AM - 8:00 PM</p>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <h3>Send us a Message</h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About NITOR</h3>
-                    <p>National Institute of Traumatology & Orthopaedic Rehabilitation is a premier healthcare institution dedicated to providing excellent trauma care and orthopedic services.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#departments">Departments</a></li>
-                        <li><a href="#appointment">Appointment</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Departments</h3>
-                    <ul>
-                        <li><a href="#">Orthopedic Surgery</a></li>
-                        <li><a href="#">Trauma Surgery</a></li>
-                        <li><a href="#">Radiology</a></li>
-                        <li><a href="#">Pathology</a></li>
-                        <li><a href="#">Physical Medicine</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Follow Us</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 National Institute of Traumatology & Orthopaedic Rehabilitation (NITOR). All rights reserved.</p>
-                <p>Website Developed & Designed by Modern Healthcare Solutions</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scroll to Top Button -->
-    <button class="scroll-to-top" id="scrollToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- Department Modal -->
-    <div id="departmentModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Department Details</h2>
-            <div id="modalBody"></div>
-        </div>
+    <div id="preloader" class="preloader" aria-hidden="true">
+        <div class="loader-ring"></div>
+        <p>Loading NITOR</p>
     </div>
 
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a href="#home" class="brand" aria-label="NITOR Home">
+                <span class="brand-mark"><i class="fa-solid fa-hospital"></i></span>
+                <span class="brand-text">NITOR</span>
+            </a>
+
+            <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav>
+                <ul id="navMenu" class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#departments">Departments</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                    </li>
+                    <li><a href="#contact" class="btn btn-primary nav-appointment">Appointment</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="emergency-banner" aria-label="Emergency help banner">
+        <div class="container emergency-inner">
+            <p><i class="fa-solid fa-triangle-exclamation"></i> 24/7 Emergency Trauma Care</p>
+            <a class="btn emergency-btn" href="tel:+880255058902"><i class="fa-solid fa-phone-volume"></i> Call +88-02-55058902</a>
+        </div>
+    </section>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-icons" aria-hidden="true">
+                <i class="fa-solid fa-heart-pulse float i1"></i>
+                <i class="fa-solid fa-stethoscope float i2"></i>
+                <i class="fa-solid fa-user-doctor float i3"></i>
+                <i class="fa-solid fa-kit-medical float i4"></i>
+            </div>
+
+            <div class="container hero-content">
+                <p class="kicker" data-aos="fade-up">National Institute of Traumatology and Orthopaedic Rehabilitation</p>
+                <h1 data-aos="fade-up" data-aos-delay="100">Advanced Orthopaedic &amp; Trauma Care</h1>
+                <p class="hero-sub" data-aos="fade-up" data-aos-delay="200">Comprehensive emergency response, precision surgery, rehabilitation, and patient-centered recovery under one modern healthcare network.</p>
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+                    <a href="#contact" class="btn btn-primary">Book Appointment</a>
+                    <a href="tel:+880255058902" class="btn btn-outline">Emergency Contact</a>
+                </div>
+                <div class="hero-glass" data-aos="fade-up" data-aos-delay="350">
+                    <div><strong>150+</strong><span>Doctors</span></div>
+                    <div><strong>500+</strong><span>Beds</span></div>
+                    <div><strong>24/7</strong><span>Emergency</span></div>
+                </div>
+            </div>
+            <a href="#stats" class="scroll-indicator" aria-label="Scroll down"><span></span></a>
+        </section>
+
+        <section id="stats" class="section stats">
+            <div class="container">
+                <div class="section-head" data-aos="fade-up">
+                    <h2>Hospital Statistics</h2>
+                    <p>Trusted care with measurable outcomes.</p>
+                </div>
+                <div class="stats-grid">
+                    <article class="card stat-card" data-aos="fade-up">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <h3 class="counter" data-target="150" data-suffix="+">0</h3>
+                        <p>Doctors</p>
+                    </article>
+                    <article class="card stat-card" data-aos="fade-up" data-aos-delay="80">
+                        <i class="fa-solid fa-bed"></i>
+                        <h3 class="counter" data-target="500" data-suffix="+">0</h3>
+                        <p>Beds</p>
+                    </article>
+                    <article class="card stat-card" data-aos="fade-up" data-aos-delay="160">
+                        <i class="fa-solid fa-hospital-user"></i>
+                        <h3 class="counter" data-target="1000000" data-format="comma" data-suffix="+">0</h3>
+                        <p>Patients Treated</p>
+                    </article>
+                    <article class="card stat-card" data-aos="fade-up" data-aos-delay="240">
+                        <i class="fa-solid fa-truck-medical"></i>
+                        <h3 class="counter" data-target="24" data-suffix="/7">0</h3>
+                        <p>Emergency Units</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="departments" class="section departments">
+            <div class="container">
+                <div class="section-head" data-aos="fade-up">
+                    <h2>Departments</h2>
+                    <p>Specialized units delivering focused orthopedic and trauma care.</p>
+                </div>
+                <div class="card-grid six" id="departmentsGrid"></div>
+            </div>
+        </section>
+
+        <section id="doctors" class="section doctors">
+            <div class="container">
+                <div class="section-head" data-aos="fade-up">
+                    <h2>Doctor Profiles</h2>
+                    <p>Experienced consultants dedicated to advanced treatment and recovery.</p>
+                </div>
+                <div class="card-grid six" id="doctorsGrid"></div>
+            </div>
+        </section>
+
+        <section id="services" class="section services">
+            <div class="container">
+                <div class="section-head" data-aos="fade-up">
+                    <h2>Services</h2>
+                    <p>Integrated clinical services with modern infrastructure.</p>
+                </div>
+                <div class="card-grid four" id="servicesGrid"></div>
+            </div>
+        </section>
+
+        <section class="section testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-head" data-aos="fade-up">
+                    <h2>Patient Testimonials</h2>
+                    <p>Stories from patients and families we care for.</p>
+                </div>
+                <div class="slider" id="testimonialSlider" data-aos="fade-up" data-aos-delay="100">
+                    <button class="slider-btn" id="prevTestimonial" aria-label="Previous testimonial"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="slider-viewport">
+                        <div class="slider-track" id="testimonialTrack"></div>
+                    </div>
+                    <button class="slider-btn" id="nextTestimonial" aria-label="Next testimonial"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="slider-dots" id="testimonialDots"></div>
+            </div>
+        </section>
+
+        <section class="section gallery" id="gallery">
+            <div class="container">
+                <div class="section-head" data-aos="fade-up">
+                    <h2>Hospital Gallery</h2>
+                    <p>A glimpse of our facilities and healing spaces.</p>
+                </div>
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+        </section>
+
+        <section class="section map" id="location">
+            <div class="container map-card" data-aos="fade-up">
+                <div class="map-head">
+                    <h2><i class="fa-solid fa-location-dot"></i> Hospital Location</h2>
+                    <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=National+Institute+of+Traumatology+and+Orthopaedic+Rehabilitation+Dhaka" target="_blank" rel="noopener noreferrer">Get Directions</a>
+                </div>
+                <div class="map-frame">
+                    <iframe title="NITOR Map" src="https://www.google.com/maps?q=National%20Institute%20of%20Traumatology%20and%20Orthopaedic%20Rehabilitation%20Dhaka&output=embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact" id="contact">
+            <div class="container contact-wrap" data-aos="fade-up">
+                <div class="card">
+                    <h2>Contact & Appointment</h2>
+                    <p>Address: Sher-E-Bangla Nagar, Dhaka-1207, Bangladesh</p>
+                    <p>Phone: +88-02-55058902, +88-02-55058903</p>
+                    <p>Email: nitor@hospi.dghs.gov.bd</p>
+                </div>
+                <form class="card contact-form" id="quickAppointmentForm">
+                    <h3>Quick Appointment Request</h3>
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="tel" placeholder="Phone Number" required>
+                    <input type="date" required>
+                    <button class="btn btn-primary" type="submit">Submit Request</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>NITOR</h3>
+                <p>National Institute of Traumatology and Orthopaedic Rehabilitation, Dhaka.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#departments">Departments</a>
+                <a href="#doctors">Doctors</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <div class="socials">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="container copyright">&copy; 2026 NITOR. All rights reserved.</div>
+    </footer>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <button id="lightboxClose" class="lightbox-close" aria-label="Close image viewer">&times;</button>
+        <button id="lightboxPrev" class="lightbox-nav prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+        <img id="lightboxImage" src="" alt="Hospital gallery image">
+        <button id="lightboxNext" class="lightbox-nav next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

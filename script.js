@@ -1,938 +1,288 @@
-// ============================================
-// NITOR - Modern Hospital Website JavaScript
-// ============================================
-
-// Language configuration
-const translations = {
-    en: {
-        home: 'Home',
-        about: 'About',
-        services: 'Services',
-        doctors: 'Our Team',
-        appointment: 'Appointment',
-        contact: 'Contact',
-    },
-    bn: {
-        home: 'হোম',
-        about: 'পরিচয়',
-        services: 'সেবা',
-        doctors: 'আমাদের টিম',
-        appointment: 'অ্যাপয়েন্টমেন্ট',
-        contact: 'যোগাযোগ',
-    }
-};
-
-let currentLanguage = 'en';
-
-const doctorProfiles = [
-    {
-        name: 'Prof. Dr. Md. Abul Kenan',
-        designation: 'Director & Professor',
-        specialization: 'Orthopedic Surgery',
-        experience: '22 years experience',
-        image: 'https://via.placeholder.com/160x160?text=Dr+Kenan'
-    },
-    {
-        name: 'Prof. Dr. Md. Tofayel Hossain',
-        designation: 'Professor',
-        specialization: 'Trauma Surgery',
-        experience: '20 years experience',
-        image: 'https://via.placeholder.com/160x160?text=Dr+Tofayel'
-    },
-    {
-        name: 'Dr. G. M. Jahangir Hossain',
-        designation: 'Senior Consultant',
-        specialization: 'Orthopedic Surgery',
-        experience: '18 years experience',
-        image: 'https://via.placeholder.com/160x160?text=Dr+Jahangir'
-    },
-    {
-        name: 'Dr. Farhana Sultana',
-        designation: 'Consultant',
-        specialization: 'Trauma Surgery',
-        experience: '14 years experience',
-        image: 'https://via.placeholder.com/160x160?text=Dr+Farhana'
-    },
-    {
-        name: 'Dr. Kamal Uddin',
-        designation: 'Rehabilitation Specialist',
-        specialization: 'Physical Medicine & Rehabilitation',
-        experience: '16 years experience',
-        image: 'https://via.placeholder.com/160x160?text=Dr+Kamal'
-    },
-    {
-        name: 'Dr. Tania Chowdhury',
-        designation: 'Consultant Physician',
-        specialization: 'General Medicine',
-        experience: '12 years experience',
-        image: 'https://via.placeholder.com/160x160?text=Dr+Tania'
-    }
+const departmentData = [
+    { title: 'Orthopedic Surgery', icon: 'fa-bone', desc: 'Advanced surgical and non-surgical treatment for bone and joint conditions.' },
+    { title: 'Trauma Care', icon: 'fa-truck-medical', desc: 'Rapid emergency trauma stabilization and definitive treatment.' },
+    { title: 'Rehabilitation', icon: 'fa-wheelchair', desc: 'Structured recovery plans focused on mobility and quality of life.' },
+    { title: 'Physiotherapy', icon: 'fa-person-walking', desc: 'Personalized therapy sessions to regain strength and function.' },
+    { title: 'Sports Injury', icon: 'fa-futbol', desc: 'Diagnosis and treatment for ligament, tendon, and impact injuries.' },
+    { title: 'Pediatric Orthopedics', icon: 'fa-child-reaching', desc: 'Child-focused orthopedic care for growth and development issues.' }
 ];
 
-// ============================================
-// NAVIGATION FUNCTIONALITY
-// ============================================
+const doctorData = [
+    { name: 'Prof. Dr. Md. Abul Kenan', specialization: 'Orthopedic Surgery', exp: '22 years', img: 'https://picsum.photos/id/1005/300/300' },
+    { name: 'Prof. Dr. Md. Tofayel Hossain', specialization: 'Trauma Care', exp: '20 years', img: 'https://picsum.photos/id/1012/300/300' },
+    { name: 'Dr. G. M. Jahangir Hossain', specialization: 'Orthopedic Surgery', exp: '18 years', img: 'https://picsum.photos/id/1027/300/300' },
+    { name: 'Dr. Farhana Sultana', specialization: 'Rehabilitation', exp: '14 years', img: 'https://picsum.photos/id/1025/300/300' },
+    { name: 'Dr. Kamal Uddin', specialization: 'Physiotherapy', exp: '16 years', img: 'https://picsum.photos/id/1001/300/300' },
+    { name: 'Dr. Tania Chowdhury', specialization: 'Pediatric Orthopedics', exp: '12 years', img: 'https://picsum.photos/id/1062/300/300' }
+];
 
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
+const serviceData = [
+    { title: 'Emergency Care', icon: 'fa-ambulance', desc: '24/7 emergency trauma and orthopedic support.' },
+    { title: 'Surgery', icon: 'fa-user-doctor', desc: 'Modern operation facilities and specialist surgeons.' },
+    { title: 'Rehabilitation', icon: 'fa-hand-holding-medical', desc: 'Post-treatment recovery and therapy programs.' },
+    { title: 'Diagnostic Services', icon: 'fa-microscope', desc: 'Imaging and laboratory services for accurate diagnosis.' }
+];
 
-    renderDoctorProfiles();
+const testimonialData = [
+    { name: 'Mr. Ahmed Hassan', rating: 5, text: 'Outstanding trauma support and excellent doctor coordination.', img: 'https://picsum.photos/id/1005/120/120' },
+    { name: 'Mrs. Nasrin Begum', rating: 5, text: 'My rehabilitation outcome was better than expected. Great staff.', img: 'https://picsum.photos/id/1011/120/120' },
+    { name: 'Mr. Karim Khan', rating: 5, text: 'Professional surgical care and very smooth patient management.', img: 'https://picsum.photos/id/1027/120/120' }
+];
 
-    // Mobile menu toggle
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
-            
-            // Animate hamburger
-            hamburger.classList.toggle('active');
-        });
-    }
+const galleryData = [
+    'https://picsum.photos/id/1011/900/650',
+    'https://picsum.photos/id/1005/900/650',
+    'https://picsum.photos/id/1025/900/650',
+    'https://picsum.photos/id/1043/900/650',
+    'https://picsum.photos/id/1020/900/650',
+    'https://picsum.photos/id/1015/900/650',
+    'https://picsum.photos/id/1033/900/650',
+    'https://picsum.photos/id/1062/900/650',
+    'https://picsum.photos/id/1074/900/650'
+];
 
-    // Close menu when link is clicked
-    const navItems = document.querySelectorAll('.nav-links a');
-    navItems.forEach(item => {
-        item.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            if (hamburger) {
-                hamburger.classList.remove('active');
-            }
-        });
-    });
+let testimonialIndex = 0;
+let testimonialInterval = null;
+let lightboxIndex = 0;
 
-    // Dropdown functionality for mobile
-    const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        const link = dropdown.querySelector('a');
-        link.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                dropdown.classList.toggle('active');
-            }
-        });
-    });
-
-    // Scroll to top button
-    const scrollToTopBtn = document.getElementById('scrollToTop');
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            scrollToTopBtn.classList.add('show');
-        } else {
-            scrollToTopBtn.classList.remove('show');
-        }
-    });
-
-    if (scrollToTopBtn) {
-        scrollToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    // Close mobile menu on window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            navLinks.classList.remove('active');
-            if (hamburger) {
-                hamburger.classList.remove('active');
-            }
-        }
-    });
-
-    // Form submissions
-    handleFormSubmissions();
-
-    // Smooth scrolling for navigation links
-    setupSmoothScrolling();
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    setTimeout(() => preloader.classList.add('hide'), 500);
 });
 
-// ============================================
-// SMOOTH SCROLLING
-// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    initMenu();
+    renderDepartments();
+    renderDoctors();
+    renderServices();
+    initTestimonials();
+    initGallery();
+    initCounters();
+    initAOS();
+    initAppointmentForm();
+});
 
-function setupSmoothScrolling() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            // Skip if onclick handler is present (like modals)
-            if (this.onclick || href === '#') {
-                return;
-            }
-            if (href) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
+function initTheme() {
+    const toggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('nitorTheme') || 'light';
+    setTheme(savedTheme);
+
+    toggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+        localStorage.setItem('nitorTheme', next);
+    });
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const icon = document.querySelector('#themeToggle i');
+    if (!icon) return;
+    icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+}
+
+function initMenu() {
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('navMenu');
+
+    toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        menu.classList.toggle('show');
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+            menu.classList.remove('show');
+            toggle.setAttribute('aria-expanded', 'false');
         });
     });
 }
 
-// ============================================
-// APPOINTMENT BOOKING
-// ============================================
-
-function scrollToAppointment() {
-    const appointmentSection = document.getElementById('appointment');
-    if (appointmentSection) {
-        appointmentSection.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-// ============================================
-// EMERGENCY CALL
-// ============================================
-
-function callEmergency() {
-    // In a real app, this would initiate a call or open phone app
-    alert('Emergency Number: +88-02-55058902\n\nPlease call immediately for emergency assistance.');
-    // Alternatively: window.location.href = 'tel:+8802550589 02';
-}
-
-function renderDoctorProfiles() {
-    const doctorGrid = document.getElementById('doctorProfilesGrid');
-    if (!doctorGrid) {
-        return;
-    }
-
-    doctorGrid.innerHTML = doctorProfiles.map(profile => `
-        <article class="doctor-card">
-            <div class="doctor-image">
-                <img src="${profile.image}" alt="${profile.name}">
-            </div>
-            <h3>${profile.name}</h3>
-            <p class="designation">${profile.designation}</p>
-            <p class="specialty">${profile.specialization}</p>
-            <p class="experience"><i class="fas fa-award"></i>${profile.experience}</p>
-            <button
-                type="button"
-                class="btn btn-primary doctor-book-btn"
-                data-name="${profile.name}"
-                data-department="${profile.specialization}">
-                Book Appointment
-            </button>
+function renderDepartments() {
+    const grid = document.getElementById('departmentsGrid');
+    grid.innerHTML = departmentData.map((item, idx) => `
+        <article class="card department-card" data-aos="fade-up" data-aos-delay="${idx * 70}">
+            <i class="fa-solid ${item.icon}"></i>
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
         </article>
     `).join('');
+}
 
-    doctorGrid.querySelectorAll('.doctor-book-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const doctorName = this.getAttribute('data-name');
-            const departmentName = this.getAttribute('data-department');
-            bookDoctorAppointment(doctorName, departmentName);
+function renderDoctors() {
+    const grid = document.getElementById('doctorsGrid');
+    grid.innerHTML = doctorData.map((doctor, idx) => `
+        <article class="card doctor-card" data-aos="fade-up" data-aos-delay="${idx * 70}">
+            <img src="${doctor.img}" alt="${doctor.name}">
+            <h3>${doctor.name}</h3>
+            <p>${doctor.specialization}</p>
+            <span class="doctor-meta">${doctor.exp} Experience</span>
+            <a href="#contact" class="btn btn-primary">Book Appointment</a>
+        </article>
+    `).join('');
+}
+
+function renderServices() {
+    const grid = document.getElementById('servicesGrid');
+    grid.innerHTML = serviceData.map((service, idx) => `
+        <article class="card service-card" data-aos="fade-up" data-aos-delay="${idx * 80}">
+            <i class="fa-solid ${service.icon}"></i>
+            <h3>${service.title}</h3>
+            <p>${service.desc}</p>
+        </article>
+    `).join('');
+}
+
+function initTestimonials() {
+    const track = document.getElementById('testimonialTrack');
+    const dots = document.getElementById('testimonialDots');
+    const prev = document.getElementById('prevTestimonial');
+    const next = document.getElementById('nextTestimonial');
+
+    track.innerHTML = testimonialData.map((item) => {
+        const stars = '<i class="fa-solid fa-star"></i>'.repeat(item.rating);
+        return `
+            <article class="card testimonial-card">
+                <img src="${item.img}" alt="${item.name}">
+                <div class="stars">${stars}</div>
+                <p>"${item.text}"</p>
+                <h4>${item.name}</h4>
+            </article>
+        `;
+    }).join('');
+
+    dots.innerHTML = testimonialData.map((_, i) => `
+        <button aria-label="Go to testimonial ${i + 1}" data-index="${i}" class="${i === 0 ? 'active' : ''}"></button>
+    `).join('');
+
+    const update = (index) => {
+        testimonialIndex = (index + testimonialData.length) % testimonialData.length;
+        track.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+        dots.querySelectorAll('button').forEach((dot, i) => {
+            dot.classList.toggle('active', i === testimonialIndex);
         });
-    });
-}
+    };
 
-function bookDoctorAppointment(doctorName, departmentName) {
-    scrollToAppointment();
-
-    const departmentSelect = document.getElementById('department');
-    const doctorSelect = document.getElementById('doctor');
-
-    if (departmentSelect && doctorSelect) {
-        departmentSelect.value = departmentName;
-        updateDoctorOptions(departmentSelect, doctorSelect);
-
-        if ([...doctorSelect.options].some(option => option.value === doctorName)) {
-            doctorSelect.value = doctorName;
-        }
-    }
-}
-
-const doctorDirectory = {
-    'Orthopedic Surgery': [
-        'Prof. Dr. Md. Abul Kenan',
-        'Dr. G. M. Jahangir Hossain'
-    ],
-    'Trauma Surgery': [
-        'Prof. Dr. Md. Tofayel Hossain',
-        'Dr. Farhana Sultana'
-    ],
-    'Physical Medicine & Rehabilitation': [
-        'Dr. Kamal Uddin',
-        'Dr. Shahida Akter'
-    ],
-    Cardiology: [
-        'Dr. Nabil Ahmed',
-        'Dr. Muntaha Rahman'
-    ],
-    'General Medicine': [
-        'Dr. Hasan Mahmud',
-        'Dr. Tania Chowdhury'
-    ]
-};
-
-function setFieldError(field, message) {
-    const errorElement = document.getElementById(`${field.id}Error`);
-    field.classList.add('input-error');
-    if (errorElement) {
-        errorElement.textContent = message;
-    }
-}
-
-function clearFieldError(field) {
-    const errorElement = document.getElementById(`${field.id}Error`);
-    field.classList.remove('input-error');
-    if (errorElement) {
-        errorElement.textContent = '';
-    }
-}
-
-function clearAppointmentErrors(fields) {
-    Object.values(fields).forEach(field => clearFieldError(field));
-}
-
-function updateDoctorOptions(departmentSelect, doctorSelect) {
-    const selectedDepartment = departmentSelect.value;
-    const doctors = doctorDirectory[selectedDepartment] || [];
-
-    doctorSelect.innerHTML = '';
-
-    const placeholder = document.createElement('option');
-    placeholder.value = '';
-    placeholder.textContent = doctors.length ? 'Select Doctor' : 'Select Department First';
-    doctorSelect.appendChild(placeholder);
-
-    doctors.forEach(doctor => {
-        const option = document.createElement('option');
-        option.value = doctor;
-        option.textContent = doctor;
-        doctorSelect.appendChild(option);
+    prev.addEventListener('click', () => {
+        update(testimonialIndex - 1);
+        restartAutoSlide(update);
     });
 
-    doctorSelect.disabled = doctors.length === 0;
-}
-
-function renderAppointmentConfirmation(appointmentData) {
-    const confirmationBox = document.getElementById('appointmentConfirmation');
-    if (!confirmationBox) {
-        return;
-    }
-
-    const dateText = new Date(appointmentData.date).toLocaleDateString('en-BD', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+    next.addEventListener('click', () => {
+        update(testimonialIndex + 1);
+        restartAutoSlide(update);
     });
 
-    confirmationBox.innerHTML = `
-        <strong>Appointment booked successfully.</strong><br>
-        Patient: ${appointmentData.patientName}<br>
-        Phone: ${appointmentData.phoneNumber}<br>
-        Department: ${appointmentData.department}<br>
-        Doctor: ${appointmentData.doctor}<br>
-        Date & Time: ${dateText}, ${appointmentData.time}
-    `;
-    confirmationBox.classList.add('show');
+    dots.addEventListener('click', (event) => {
+        const btn = event.target.closest('button');
+        if (!btn) return;
+        update(Number(btn.dataset.index));
+        restartAutoSlide(update);
+    });
+
+    testimonialInterval = setInterval(() => update(testimonialIndex + 1), 4500);
 }
 
-// ============================================
-// FORM HANDLING
-// ============================================
+function restartAutoSlide(updateFn) {
+    if (testimonialInterval) clearInterval(testimonialInterval);
+    testimonialInterval = setInterval(() => updateFn(testimonialIndex + 1), 4500);
+}
 
-function handleFormSubmissions() {
-    // Appointment Form
-    const appointmentForm = document.getElementById('appointmentForm');
-    if (appointmentForm) {
-        const patientName = document.getElementById('patientName');
-        const phoneNumber = document.getElementById('phoneNumber');
-        const department = document.getElementById('department');
-        const doctor = document.getElementById('doctor');
-        const appointmentDate = document.getElementById('appointmentDate');
-        const appointmentTime = document.getElementById('appointmentTime');
-        const confirmationBox = document.getElementById('appointmentConfirmation');
+function initGallery() {
+    const grid = document.getElementById('galleryGrid');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
 
-        const appointmentFields = {
-            patientName,
-            phoneNumber,
-            department,
-            doctor,
-            appointmentDate,
-            appointmentTime
-        };
+    grid.innerHTML = galleryData.map((src, i) => `
+        <button data-index="${i}" data-aos="zoom-in" data-aos-delay="${(i % 3) * 70}">
+            <img src="${src}" alt="Hospital gallery image ${i + 1}">
+        </button>
+    `).join('');
 
-        const today = new Date();
-        const minDate = today.toISOString().split('T')[0];
-        if (appointmentDate) {
-            appointmentDate.min = minDate;
-        }
+    const setImage = (index) => {
+        lightboxIndex = (index + galleryData.length) % galleryData.length;
+        lightboxImage.src = galleryData[lightboxIndex];
+    };
 
-        if (department && doctor) {
-            updateDoctorOptions(department, doctor);
-            department.addEventListener('change', function() {
-                updateDoctorOptions(department, doctor);
-                clearFieldError(department);
-                clearFieldError(doctor);
-            });
-        }
+    grid.addEventListener('click', (event) => {
+        const button = event.target.closest('button');
+        if (!button) return;
+        setImage(Number(button.dataset.index));
+        lightbox.classList.add('show');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    });
 
-        Object.values(appointmentFields).forEach(field => {
-            if (!field) {
-                return;
-            }
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', () => setImage(lightboxIndex - 1));
+    document.getElementById('lightboxNext').addEventListener('click', () => setImage(lightboxIndex + 1));
 
-            field.addEventListener('input', function() {
-                clearFieldError(field);
-            });
+    lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeLightbox();
+    });
 
-            field.addEventListener('change', function() {
-                clearFieldError(field);
-            });
-        });
+    document.addEventListener('keydown', (event) => {
+        if (!lightbox.classList.contains('show')) return;
+        if (event.key === 'Escape') closeLightbox();
+        if (event.key === 'ArrowLeft') setImage(lightboxIndex - 1);
+        if (event.key === 'ArrowRight') setImage(lightboxIndex + 1);
+    });
 
-        appointmentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            clearAppointmentErrors(appointmentFields);
+    function closeLightbox() {
+        lightbox.classList.remove('show');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+}
 
-            if (confirmationBox) {
-                confirmationBox.classList.remove('show');
-                confirmationBox.textContent = '';
-            }
+function initCounters() {
+    const counters = document.querySelectorAll('.counter');
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = Number(el.dataset.target || 0);
+            const suffix = el.dataset.suffix || '';
+            const comma = el.dataset.format === 'comma';
+            const start = performance.now();
+            const duration = 1400;
 
-            let isValid = true;
-            const firstErrorField = [];
-
-            const nameValue = patientName.value.trim();
-            if (!nameValue || nameValue.length < 2) {
-                isValid = false;
-                setFieldError(patientName, 'Enter a valid patient name.');
-                firstErrorField.push(patientName);
-            }
-
-            const phoneValue = phoneNumber.value.trim();
-            if (!/^\+?\d{10,15}$/.test(phoneValue)) {
-                isValid = false;
-                setFieldError(phoneNumber, 'Enter a valid phone number (10-15 digits).');
-                firstErrorField.push(phoneNumber);
-            }
-
-            if (!department.value) {
-                isValid = false;
-                setFieldError(department, 'Please select a department.');
-                firstErrorField.push(department);
-            }
-
-            if (!doctor.value) {
-                isValid = false;
-                setFieldError(doctor, 'Please select a doctor.');
-                firstErrorField.push(doctor);
-            }
-
-            if (!appointmentDate.value) {
-                isValid = false;
-                setFieldError(appointmentDate, 'Please select a date.');
-                firstErrorField.push(appointmentDate);
-            } else {
-                const selectedDate = new Date(`${appointmentDate.value}T00:00:00`);
-                const todayDate = new Date();
-                todayDate.setHours(0, 0, 0, 0);
-                if (selectedDate < todayDate) {
-                    isValid = false;
-                    setFieldError(appointmentDate, 'Date cannot be in the past.');
-                    firstErrorField.push(appointmentDate);
-                }
-            }
-
-            if (!appointmentTime.value) {
-                isValid = false;
-                setFieldError(appointmentTime, 'Please select a time.');
-                firstErrorField.push(appointmentTime);
-            }
-
-            if (!isValid) {
-                if (firstErrorField.length > 0) {
-                    firstErrorField[0].focus();
-                }
-                return;
-            }
-
-            const formData = {
-                patientName: nameValue,
-                phoneNumber: phoneValue,
-                department: department.value,
-                doctor: doctor.value,
-                date: appointmentDate.value,
-                time: appointmentTime.value,
-                timestamp: new Date().toISOString()
+            const tick = (time) => {
+                const progress = Math.min((time - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const value = Math.floor(target * eased);
+                el.textContent = `${comma ? value.toLocaleString('en-US') : value}${suffix}`;
+                if (progress < 1) requestAnimationFrame(tick);
             };
 
-            const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-            appointments.push(formData);
-            localStorage.setItem('appointments', JSON.stringify(appointments));
-
-            renderAppointmentConfirmation(formData);
-
-            this.reset();
-            updateDoctorOptions(department, doctor);
+            requestAnimationFrame(tick);
+            obs.unobserve(el);
         });
-    }
+    }, { threshold: 0.35 });
 
-    // Contact Form
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const inputs = this.querySelectorAll('input, textarea');
-            const formData = {
-                name: inputs[0].value,
-                email: inputs[1].value,
-                subject: inputs[2].value,
-                message: inputs[3].value,
-            };
-
-            // Validate form
-            if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-                alert('❌ Please fill in all fields');
-                return;
-            }
-
-            // Show success message
-            const successMsg = `
-✅ MESSAGE SENT SUCCESSFULLY!
-
-Thank you for contacting NITOR Hospital.
-
-Your Message Details:
-─────────────────────
-From: ${formData.name}
-Email: ${formData.email}
-Subject: ${formData.subject}
-
-We will get back to you at ${formData.email} within 24 hours.
-
-Best regards,
-NITOR Hospital Team
-            `;
-            
-            alert(successMsg);
-            
-            // Reset form
-            this.reset();
-            
-            // Store in localStorage for demo purposes
-            const messages = JSON.parse(localStorage.getItem('messages') || '[]');
-            messages.push({...formData, timestamp: new Date().toISOString()});
-            localStorage.setItem('messages', JSON.stringify(messages));
-        });
-    }
+    counters.forEach((counter) => observer.observe(counter));
 }
 
-// ============================================
-// LANGUAGE SWITCHING
-// ============================================
-
-function toggleLanguage() {
-    currentLanguage = currentLanguage === 'en' ? 'bn' : 'en';
-    setLanguage(currentLanguage);
-    updateLanguageButton();
-}
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    updateLanguageButton();
-    // Store language preference
-    localStorage.setItem('nitorLanguage', lang);
-}
-
-function updateLanguageButton() {
-    const langBtn = document.querySelector('.lang-btn');
-    if (langBtn) {
-        langBtn.textContent = currentLanguage === 'en' ? 'বাংলা' : 'English';
-    }
-}
-
-// Load saved language preference
-document.addEventListener('DOMContentLoaded', function() {
-    const savedLanguage = localStorage.getItem('nitorLanguage') || 'en';
-    setLanguage(savedLanguage);
-});
-
-// ============================================
-// INTERSECTION OBSERVER FOR ANIMATIONS
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'slideInUp 0.6s ease forwards';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe cards for animation
-    document.querySelectorAll('.service-card, .dept-card, .doctor-card, .news-card, .stat-card, .hospital-stat-card').forEach(card => {
-        card.style.opacity = '0';
-        observer.observe(card);
-    });
-});
-
-// ============================================
-// ACTIVE LINK HIGHLIGHTING
-// ============================================
-
-window.addEventListener('scroll', function() {
-    const sections = document.querySelectorAll('section[id]');
-    let currentSection = '';
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (pageYOffset >= sectionTop - 200) {
-            currentSection = section.getAttribute('id');
-        }
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentSection}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// ============================================
-// COUNTER ANIMATION FOR STATS
-// ============================================
-
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter-value');
-    if (counters.length === 0) {
-        return;
-    }
-
-    const observerOptions = {
-        threshold: 0.35
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && entry.target.dataset.counted !== 'true') {
-                const element = entry.target;
-                const target = Number(element.dataset.counterTarget || '0');
-                const suffix = element.dataset.counterSuffix || '';
-                const useCommaFormat = element.dataset.counterFormat === 'comma';
-                const duration = 1500;
-                const startTime = performance.now();
-
-                function updateCounter(currentTime) {
-                    const elapsed = Math.min((currentTime - startTime) / duration, 1);
-                    const eased = 1 - Math.pow(1 - elapsed, 3);
-                    const currentValue = Math.floor(target * eased);
-                    const formattedValue = useCommaFormat
-                        ? currentValue.toLocaleString('en-US')
-                        : String(currentValue);
-
-                    element.textContent = `${formattedValue}${suffix}`;
-
-                    if (elapsed < 1) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        const finalValue = useCommaFormat
-                            ? target.toLocaleString('en-US')
-                            : String(target);
-                        element.textContent = `${finalValue}${suffix}`;
-                        element.dataset.counted = 'true';
-                    }
-                }
-
-                requestAnimationFrame(updateCounter);
-
-                observer.unobserve(element);
-            }
-        });
-    }, observerOptions);
-
-    counters.forEach(counter => {
-        observer.observe(counter);
+function initAOS() {
+    if (!window.AOS) return;
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 60
     });
 }
 
-document.addEventListener('DOMContentLoaded', animateCounters);
+function initAppointmentForm() {
+    const form = document.getElementById('quickAppointmentForm');
+    if (!form) return;
 
-// ============================================
-// DEPARTMENT MODAL SYSTEM
-// ============================================
-
-const departmentContent = {
-    orthopedics: {
-        title: 'Orthopedic Surgery',
-        content: `
-            <h3>Overview</h3>
-            <p>Our Orthopedic Surgery department specializes in the diagnosis, treatment, and rehabilitation of disorders affecting bones, joints, ligaments, and muscles.</p>
-            
-            <h3>Services Offered:</h3>
-            <ul>
-                <li>Joint replacement surgery</li>
-                <li>Fracture management and treatment</li>
-                <li>Arthroscopic surgery</li>
-                <li>Spinal surgery</li>
-                <li>Sports medicine and injuries</li>
-                <li>Rehabilitation and physiotherapy</li>
-            </ul>
-            
-            <h3>Our Team:</h3>
-            <p>Led by Prof. Dr. Md. Abul Kenan with highly experienced orthopedic surgeons and specialists.</p>
-        `
-    },
-    trauma: {
-        title: 'Trauma Surgery',
-        content: `
-            <h3>Overview</h3>
-            <p>Our Trauma Surgery department provides comprehensive emergency care for trauma patients with 24/7 availability.</p>
-            
-            <h3>Services Offered:</h3>
-            <ul>
-                <li>Emergency trauma care</li>
-                <li>Accident and injury management</li>
-                <li>Multi-trauma patient care</li>
-                <li>Burn management</li>
-                <li>Critical care management</li>
-                <li>Post-trauma rehabilitation</li>
-            </ul>
-            
-            <h3>Our Team:</h3>
-            <p>Expert trauma surgeons available 24/7 with Prof. Dr. Md. Tofayel Hossain leading the department.</p>
-        `
-    },
-    rehabilitation: {
-        title: 'Physical Medicine & Rehabilitation',
-        content: `
-            <h3>Overview</h3>
-            <p>We provide comprehensive rehabilitation services to help patients recover and restore functionality after injuries or surgeries.</p>
-            
-            <h3>Services Offered:</h3>
-            <ul>
-                <li>Physiotherapy programs</li>
-                <li>Occupational therapy</li>
-                <li>Pain management</li>
-                <li>Post-operative rehabilitation</li>
-                <li>Mobility and strength training</li>
-                <li>Patient education and counseling</li>
-            </ul>
-            
-            <h3>Our Team:</h3>
-            <p>Experienced rehabilitation specialists and physiotherapists dedicated to patient recovery.</p>
-        `
-    },
-    radiology: {
-        title: 'Radiology & Imaging',
-        content: `
-            <h3>Overview</h3>
-            <p>Our state-of-the-art radiology department offers advanced diagnostic imaging services.</p>
-            
-            <h3>Services Offered:</h3>
-            <ul>
-                <li>X-ray imaging</li>
-                <li>CT (Computed Tomography) scanning</li>
-                <li>MRI (Magnetic Resonance Imaging)</li>
-                <li>Ultrasound imaging</li>
-                <li>Digital radiography</li>
-                <li>Image-guided procedures</li>
-            </ul>
-            
-            <h3>Technology:</h3>
-            <p>equipped with latest diagnostic imaging technology for accurate diagnosis and treatment planning.</p>
-        `
-    },
-    pathology: {
-        title: 'Pathology',
-        content: `
-            <h3>Overview</h3>
-            <p>Our pathology laboratory provides comprehensive diagnostic testing services with accurate and timely results.</p>
-            
-            <h3>Services Offered:</h3>
-            <ul>
-                <li>Clinical pathology testing</li>
-                <li>Hematology (blood) tests</li>
-                <li>Biochemistry tests</li>
-                <li>Microbiology and culture tests</li>
-                <li>Immunology testing</li>
-                <li>Transfusion medicine services</li>
-            </ul>
-            
-            <h3>Quality Assurance:</h3>
-            <p>All tests conducted by certified pathologists with strict quality control measures.</p>
-        `
-    },
-    anesthesia: {
-        title: 'Anesthesiology',
-        content: `
-            <h3>Overview</h3>
-            <p>Our anesthesiology department ensures safe and effective anesthetic management for all surgical procedures.</p>
-            
-            <h3>Services Offered:</h3>
-            <ul>
-                <li>General anesthesia</li>
-                <li>Regional anesthesia</li>
-                <li>Local anesthesia</li>
-                <li>Pain management</li>
-                <li>Critical care anesthesia</li>
-                <li>Patient pre-operative assessment</li>
-            </ul>
-            
-            <h3>Our Team:</h3>
-            <p>Experienced anesthesiologists ensuring patient safety and comfort during all procedures.</p>
-        `
-    }
-};
-
-function showModal(department) {
-    const modal = document.getElementById('departmentModal');
-    const content = departmentContent[department];
-    
-    document.getElementById('modalTitle').textContent = content.title;
-    document.getElementById('modalBody').innerHTML = content.content;
-    modal.classList.add('show');
-}
-
-function closeModal() {
-    const modal = document.getElementById('departmentModal');
-    modal.classList.remove('show');
-}
-
-// Close modal when clicking outside
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('departmentModal');
-    if (event.target === modal) {
-        closeModal();
-    }
-});
-
-// ============================================
-// FAQ TOGGLE FUNCTIONALITY
-// ============================================
-
-function toggleFaq(element) {
-    const faqItem = element.parentElement;
-    faqItem.classList.toggle('active');
-}
-
-// ============================================
-// SHOW ALL NEWS
-// ============================================
-
-function showAllNews() {
-    alert('Redirecting to News Page...\n\nThis would show all news articles. You can replace with actual news page link.');
-    // window.location.href = '/news';
-}
-
-
-// Smooth scroll helper for button clicks
-function smoothScroll(target) {
-    const element = document.querySelector(target);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-// Add active class to current navigation item
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-});
-
-// ============================================
-// RESPONSIVE IMAGE LAZY LOADING
-// ============================================
-
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.add('loaded');
-                observer.unobserve(img);
-            }
-        });
-    });
-
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-    });
-}
-
-// ============================================
-// KEYBOARD SHORTCUTS
-// ============================================
-
-document.addEventListener('keydown', function(event) {
-    // Press 'E' for emergency
-    if (event.key.toLowerCase() === 'e' && event.ctrlKey) {
+    form.addEventListener('submit', (event) => {
         event.preventDefault();
-        callEmergency();
-    }
-    
-    // Press 'A' for appointment
-    if (event.key.toLowerCase() === 'a' && event.ctrlKey) {
-        event.preventDefault();
-        scrollToAppointment();
-    }
-});
-
-// ============================================
-// ACCESSIBILITY IMPROVEMENTS
-// ============================================
-
-// Improve focus management
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Tab') {
-        document.body.classList.add('kbd-focus');
-    }
-});
-
-document.addEventListener('mousedown', function() {
-    document.body.classList.remove('kbd-focus');
-});
-
-// ============================================
-// PERFORMANCE OPTIMIZATION
-// ============================================
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+        alert('Appointment request submitted successfully. Our team will contact you shortly.');
+        form.reset();
+    });
 }
-
-// Use debounce for scroll events
-const handleScroll = debounce(function() {
-    // Your scroll handling code
-}, 100);
-
-window.addEventListener('scroll', handleScroll);
