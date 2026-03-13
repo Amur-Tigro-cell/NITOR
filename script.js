@@ -53,6 +53,7 @@ window.addEventListener('load', () => {
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initMenu();
+    initHeroIntro();
     renderDepartments();
     renderDoctors();
     renderServices();
@@ -63,14 +64,24 @@ document.addEventListener('DOMContentLoaded', () => {
     initAppointmentForm();
 });
 
+function initHeroIntro() {
+    const hero = document.getElementById('home');
+    if (!hero) return;
+
+    requestAnimationFrame(() => {
+        hero.classList.add('hero-ready');
+    });
+}
+
 function initTheme() {
     const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
     const savedTheme = localStorage.getItem('nitorTheme') || 'light';
     setTheme(savedTheme);
 
-    toggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'light';
-        const next = current === 'dark' ? 'light' : 'dark';
+    toggle.addEventListener('change', () => {
+        const next = toggle.checked ? 'dark' : 'light';
         setTheme(next);
         localStorage.setItem('nitorTheme', next);
     });
@@ -78,9 +89,13 @@ function initTheme() {
 
 function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    const icon = document.querySelector('#themeToggle i');
-    if (!icon) return;
-    icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    const isDark = theme === 'dark';
+    toggle.checked = isDark;
+    toggle.setAttribute('aria-checked', String(isDark));
+    toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
 }
 
 function initMenu() {
@@ -118,9 +133,9 @@ function renderDoctors() {
         <article class="card doctor-card" data-aos="fade-up" data-aos-delay="${idx * 70}">
             <img src="${doctor.img}" alt="${doctor.name}">
             <h3>${doctor.name}</h3>
-            <p>${doctor.specialization}</p>
-            <span class="doctor-meta">${doctor.exp} Experience</span>
-            <a href="#contact" class="btn btn-primary">Book Appointment</a>
+            <p class="doctor-specialization">${doctor.specialization}</p>
+            <p class="doctor-experience"><i class="fa-regular fa-clock"></i> ${doctor.exp} Experience</p>
+            <a href="#contact" class="btn btn-primary doctor-cta">Book Appointment</a>
         </article>
     `).join('');
 }
@@ -137,17 +152,28 @@ function renderServices() {
 }
 
 function initTestimonials() {
+    if (testimonialInterval) {
+        clearInterval(testimonialInterval);
+        testimonialInterval = null;
+    }
+
+    testimonialIndex = 0;
+
+    const slider = document.getElementById('testimonialSlider');
     const track = document.getElementById('testimonialTrack');
     const dots = document.getElementById('testimonialDots');
     const prev = document.getElementById('prevTestimonial');
     const next = document.getElementById('nextTestimonial');
 
+    if (!slider || !track || !dots || !prev || !next) return;
+
     track.innerHTML = testimonialData.map((item) => {
         const stars = '<i class="fa-solid fa-star"></i>'.repeat(item.rating);
+        const emptyStars = '<i class="fa-regular fa-star"></i>'.repeat(Math.max(0, 5 - item.rating));
         return `
             <article class="card testimonial-card">
                 <img src="${item.img}" alt="${item.name}">
-                <div class="stars">${stars}</div>
+                <div class="stars">${stars}${emptyStars}</div>
                 <p>"${item.text}"</p>
                 <h4>${item.name}</h4>
             </article>
@@ -180,6 +206,28 @@ function initTestimonials() {
         const btn = event.target.closest('button');
         if (!btn) return;
         update(Number(btn.dataset.index));
+        restartAutoSlide(update);
+    });
+
+    slider.addEventListener('mouseenter', () => {
+        if (testimonialInterval) {
+            clearInterval(testimonialInterval);
+            testimonialInterval = null;
+        }
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        restartAutoSlide(update);
+    });
+
+    slider.addEventListener('focusin', () => {
+        if (testimonialInterval) {
+            clearInterval(testimonialInterval);
+            testimonialInterval = null;
+        }
+    });
+
+    slider.addEventListener('focusout', () => {
         restartAutoSlide(update);
     });
 
@@ -240,13 +288,32 @@ function initGallery() {
 
 function initCounters() {
     const counters = document.querySelectorAll('.counter');
+
+    function formatCounterValue(value, format) {
+        if (format === 'comma') {
+            return value.toLocaleString('en-US');
+        }
+
+        if (format === 'short') {
+            if (value >= 1000000) {
+                return `${Math.floor(value / 1000000)}M`;
+            }
+            if (value >= 1000) {
+                return `${Math.floor(value / 1000)}K`;
+            }
+            return String(value);
+        }
+
+        return String(value);
+    }
+
     const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
             const el = entry.target;
             const target = Number(el.dataset.target || 0);
             const suffix = el.dataset.suffix || '';
-            const comma = el.dataset.format === 'comma';
+            const format = el.dataset.format || '';
             const start = performance.now();
             const duration = 1400;
 
@@ -254,7 +321,7 @@ function initCounters() {
                 const progress = Math.min((time - start) / duration, 1);
                 const eased = 1 - Math.pow(1 - progress, 3);
                 const value = Math.floor(target * eased);
-                el.textContent = `${comma ? value.toLocaleString('en-US') : value}${suffix}`;
+                el.textContent = `${formatCounterValue(value, format)}${suffix}`;
                 if (progress < 1) requestAnimationFrame(tick);
             };
 
@@ -268,21 +335,180 @@ function initCounters() {
 
 function initAOS() {
     if (!window.AOS) return;
+
+    const sections = document.querySelectorAll('main > section');
+    sections.forEach((section, index) => {
+        if (!section.dataset.aos) {
+            section.dataset.aos = 'fade-up';
+            section.dataset.aosDelay = String((index % 4) * 40);
+        }
+    });
+
+    const cards = document.querySelectorAll('.card, .stat-card, .department-card, .doctor-card, .service-card, .testimonial-card');
+    cards.forEach((card, index) => {
+        if (!card.dataset.aos) {
+            card.dataset.aos = 'fade-up';
+            card.dataset.aosDelay = String((index % 6) * 60);
+        }
+    });
+
+    const images = document.querySelectorAll('.hero-visual img, .doctor-card img, .testimonial-card img, .gallery-grid img');
+    images.forEach((image, index) => {
+        if (!image.dataset.aos) {
+            image.dataset.aos = 'zoom-in';
+            image.dataset.aosDelay = String((index % 5) * 50);
+        }
+    });
+
     AOS.init({
-        duration: 800,
+        duration: 850,
         easing: 'ease-out-cubic',
         once: true,
-        offset: 60
+        offset: 70
     });
+
+    AOS.refreshHard();
 }
 
 function initAppointmentForm() {
     const form = document.getElementById('quickAppointmentForm');
     if (!form) return;
 
+    const patientName = document.getElementById('patientName');
+    const phoneNumber = document.getElementById('phoneNumber');
+    const departmentSelect = document.getElementById('departmentSelect');
+    const doctorSelect = document.getElementById('doctorSelect');
+    const appointmentDate = document.getElementById('appointmentDate');
+    const appointmentTime = document.getElementById('appointmentTime');
+    const confirmation = document.getElementById('bookingConfirmation');
+
+    const fields = [patientName, phoneNumber, departmentSelect, doctorSelect, appointmentDate, appointmentTime];
+
+    const today = new Date();
+    if (appointmentDate) {
+        appointmentDate.min = today.toISOString().split('T')[0];
+    }
+
+    departmentSelect.innerHTML = '<option value="">Select department</option>' +
+        departmentData.map((dep) => `<option value="${dep.title}">${dep.title}</option>`).join('');
+
+    const doctorsByDepartment = doctorData.reduce((acc, doctor) => {
+        if (!acc[doctor.specialization]) {
+            acc[doctor.specialization] = [];
+        }
+        acc[doctor.specialization].push(doctor.name);
+        return acc;
+    }, {});
+
+    function updateDoctorOptions() {
+        const selectedDepartment = departmentSelect.value;
+        const doctors = doctorsByDepartment[selectedDepartment] || [];
+
+        doctorSelect.innerHTML = '<option value="">' + (doctors.length ? 'Select doctor' : 'Select department first') + '</option>';
+
+        doctors.forEach((doctorName) => {
+            const option = document.createElement('option');
+            option.value = doctorName;
+            option.textContent = doctorName;
+            doctorSelect.appendChild(option);
+        });
+
+        doctorSelect.disabled = doctors.length === 0;
+    }
+
+    function setError(field, message) {
+        if (!field) return;
+        const error = document.getElementById(`${field.id}Error`);
+        field.classList.add('input-invalid');
+        if (error) error.textContent = message;
+    }
+
+    function clearError(field) {
+        if (!field) return;
+        const error = document.getElementById(`${field.id}Error`);
+        field.classList.remove('input-invalid');
+        if (error) error.textContent = '';
+    }
+
+    function clearAllErrors() {
+        fields.forEach((field) => clearError(field));
+    }
+
+    fields.forEach((field) => {
+        if (!field) return;
+        field.addEventListener('input', () => clearError(field));
+        field.addEventListener('change', () => clearError(field));
+    });
+
+    departmentSelect.addEventListener('change', () => {
+        updateDoctorOptions();
+        clearError(doctorSelect);
+    });
+
+    updateDoctorOptions();
+
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        alert('Appointment request submitted successfully. Our team will contact you shortly.');
+
+        clearAllErrors();
+        confirmation.classList.remove('show');
+        confirmation.textContent = '';
+
+        let valid = true;
+
+        const nameValue = patientName.value.trim();
+        const phoneValue = phoneNumber.value.trim();
+
+        if (nameValue.length < 2) {
+            setError(patientName, 'Please enter a valid patient name.');
+            valid = false;
+        }
+
+        if (!/^\+?\d{10,15}$/.test(phoneValue)) {
+            setError(phoneNumber, 'Please enter a valid phone number (10-15 digits).');
+            valid = false;
+        }
+
+        if (!departmentSelect.value) {
+            setError(departmentSelect, 'Please select a department.');
+            valid = false;
+        }
+
+        if (!doctorSelect.value) {
+            setError(doctorSelect, 'Please select a doctor.');
+            valid = false;
+        }
+
+        if (!appointmentDate.value) {
+            setError(appointmentDate, 'Please select an appointment date.');
+            valid = false;
+        }
+
+        if (!appointmentTime.value) {
+            setError(appointmentTime, 'Please select appointment time.');
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        const booking = {
+            patientName: nameValue,
+            phoneNumber: phoneValue,
+            department: departmentSelect.value,
+            doctor: doctorSelect.value,
+            date: appointmentDate.value,
+            time: appointmentTime.value,
+            createdAt: new Date().toISOString()
+        };
+
+        const savedBookings = JSON.parse(localStorage.getItem('nitorAppointments') || '[]');
+        savedBookings.push(booking);
+        localStorage.setItem('nitorAppointments', JSON.stringify(savedBookings));
+
+        confirmation.textContent = `Appointment confirmed for ${booking.patientName} with ${booking.doctor} on ${booking.date} at ${booking.time}.`;
+        confirmation.classList.add('show');
+
         form.reset();
+        updateDoctorOptions();
     });
 }

@@ -38,10 +38,14 @@
                     <li><a href="#doctors">Doctors</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li>
-                        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
-                            <i class="fa-solid fa-moon"></i>
-                        </button>
+                    <li class="theme-switch-item">
+                        <label class="theme-switch" for="themeToggle" aria-label="Toggle dark mode">
+                            <input id="themeToggle" class="theme-switch-input" type="checkbox" role="switch" aria-checked="false">
+                            <span class="theme-switch-slider" aria-hidden="true">
+                                <i class="fa-solid fa-sun"></i>
+                                <i class="fa-solid fa-moon"></i>
+                            </span>
+                        </label>
                     </li>
                     <li><a href="#contact" class="btn btn-primary nav-appointment">Appointment</a></li>
                 </ul>
@@ -51,8 +55,8 @@
 
     <section class="emergency-banner" aria-label="Emergency help banner">
         <div class="container emergency-inner">
-            <p><i class="fa-solid fa-triangle-exclamation"></i> 24/7 Emergency Trauma Care</p>
-            <a class="btn emergency-btn" href="tel:+880255058902"><i class="fa-solid fa-phone-volume"></i> Call +88-02-55058902</a>
+            <p class="emergency-text"><i class="fa-solid fa-ambulance"></i> 24/7 Emergency Trauma Care</p>
+            <a class="btn emergency-btn" href="tel:+880255058902" aria-label="Call emergency number +88-02-55058902"><i class="fa-solid fa-phone-volume"></i> +88-02-55058902</a>
         </div>
     </section>
 
@@ -66,18 +70,24 @@
                 <i class="fa-solid fa-kit-medical float i4"></i>
             </div>
 
-            <div class="container hero-content">
-                <p class="kicker" data-aos="fade-up">National Institute of Traumatology and Orthopaedic Rehabilitation</p>
-                <h1 data-aos="fade-up" data-aos-delay="100">Advanced Orthopaedic &amp; Trauma Care</h1>
-                <p class="hero-sub" data-aos="fade-up" data-aos-delay="200">Comprehensive emergency response, precision surgery, rehabilitation, and patient-centered recovery under one modern healthcare network.</p>
-                <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
-                    <a href="#contact" class="btn btn-primary">Book Appointment</a>
-                    <a href="tel:+880255058902" class="btn btn-outline">Emergency Contact</a>
+            <div class="container hero-content hero-layout">
+                <div class="hero-copy">
+                    <p class="kicker" data-aos="fade-up">NITOR - National Institute of Traumatology and Orthopaedic Rehabilitation</p>
+                    <h1 data-aos="fade-up" data-aos-delay="100">Advanced Orthopaedic &amp; Trauma Care</h1>
+                    <p class="hero-sub" data-aos="fade-up" data-aos-delay="200">NITOR offers specialized trauma stabilization, orthopedic surgery, diagnostics, and rehabilitation with compassionate patient-centered care.</p>
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+                        <a href="#contact" class="btn btn-primary">Book Appointment</a>
+                        <a href="tel:+880255058902" class="btn btn-outline">Emergency Contact</a>
+                    </div>
+                    <div class="hero-glass" data-aos="fade-up" data-aos-delay="350">
+                        <div><strong>150+</strong><span>Doctors</span></div>
+                        <div><strong>500+</strong><span>Beds</span></div>
+                        <div><strong>24/7</strong><span>Emergency</span></div>
+                    </div>
                 </div>
-                <div class="hero-glass" data-aos="fade-up" data-aos-delay="350">
-                    <div><strong>150+</strong><span>Doctors</span></div>
-                    <div><strong>500+</strong><span>Beds</span></div>
-                    <div><strong>24/7</strong><span>Emergency</span></div>
+
+                <div class="hero-visual" data-aos="zoom-in" data-aos-delay="250">
+                    <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=900&q=80" alt="Doctors in a modern hospital care unit">
                 </div>
             </div>
             <a href="#stats" class="scroll-indicator" aria-label="Scroll down"><span></span></a>
@@ -102,13 +112,13 @@
                     </article>
                     <article class="card stat-card" data-aos="fade-up" data-aos-delay="160">
                         <i class="fa-solid fa-hospital-user"></i>
-                        <h3 class="counter" data-target="1000000" data-format="comma" data-suffix="+">0</h3>
+                        <h3 class="counter" data-target="1000000" data-format="short" data-suffix="+">0</h3>
                         <p>Patients Treated</p>
                     </article>
                     <article class="card stat-card" data-aos="fade-up" data-aos-delay="240">
                         <i class="fa-solid fa-truck-medical"></i>
                         <h3 class="counter" data-target="24" data-suffix="/7">0</h3>
-                        <p>Emergency Units</p>
+                        <p>Emergency Service</p>
                     </article>
                 </div>
             </div>
@@ -191,12 +201,53 @@
                     <p>Phone: +88-02-55058902, +88-02-55058903</p>
                     <p>Email: nitor@hospi.dghs.gov.bd</p>
                 </div>
-                <form class="card contact-form" id="quickAppointmentForm">
-                    <h3>Quick Appointment Request</h3>
-                    <input type="text" placeholder="Full Name" required>
-                    <input type="tel" placeholder="Phone Number" required>
-                    <input type="date" required>
-                    <button class="btn btn-primary" type="submit">Submit Request</button>
+                <form class="card contact-form" id="quickAppointmentForm" novalidate>
+                    <h3>Book an Appointment</h3>
+
+                    <div class="appointment-grid">
+                        <div class="field-wrap">
+                            <label for="patientName">Patient Name</label>
+                            <input id="patientName" name="patientName" type="text" placeholder="Enter patient name" required>
+                            <small class="field-error" id="patientNameError"></small>
+                        </div>
+
+                        <div class="field-wrap">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="e.g. 01712345678" required>
+                            <small class="field-error" id="phoneNumberError"></small>
+                        </div>
+
+                        <div class="field-wrap">
+                            <label for="departmentSelect">Department</label>
+                            <select id="departmentSelect" name="department" required>
+                                <option value="">Select department</option>
+                            </select>
+                            <small class="field-error" id="departmentSelectError"></small>
+                        </div>
+
+                        <div class="field-wrap">
+                            <label for="doctorSelect">Doctor</label>
+                            <select id="doctorSelect" name="doctor" required disabled>
+                                <option value="">Select department first</option>
+                            </select>
+                            <small class="field-error" id="doctorSelectError"></small>
+                        </div>
+
+                        <div class="field-wrap">
+                            <label for="appointmentDate">Date</label>
+                            <input id="appointmentDate" name="date" type="date" required>
+                            <small class="field-error" id="appointmentDateError"></small>
+                        </div>
+
+                        <div class="field-wrap">
+                            <label for="appointmentTime">Time</label>
+                            <input id="appointmentTime" name="time" type="time" required>
+                            <small class="field-error" id="appointmentTimeError"></small>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Submit Booking</button>
+                    <div id="bookingConfirmation" class="booking-confirmation" role="status" aria-live="polite"></div>
                 </form>
             </div>
         </section>

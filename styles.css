@@ -1,20 +1,25 @@
 :root {
-    --bg: #f4f8fc;
+    --bg: #f3f8fb;
+    --bg-soft: #edf5fb;
     --surface: #ffffff;
+    --surface-2: #f8fbff;
     --text: #122033;
     --muted: #607388;
-    --primary: #1f6feb;
-    --primary-2: #2155c8;
-    --accent: #2bb3a8;
+    --primary: #1565c0;
+    --primary-2: #1f7ae0;
+    --accent: #1fa59a;
     --danger: #d62839;
     --border: #d9e5f1;
-    --shadow: 0 8px 24px rgba(12, 28, 54, 0.08);
-    --shadow-lg: 0 16px 36px rgba(12, 28, 54, 0.14);
+    --shadow: 0 10px 28px rgba(12, 36, 74, 0.08);
+    --shadow-lg: 0 18px 40px rgba(12, 36, 74, 0.15);
+    --ring: rgba(21, 101, 192, 0.2);
 }
 
 :root[data-theme='dark'] {
     --bg: #0e1723;
+    --bg-soft: #121f2f;
     --surface: #152335;
+    --surface-2: #1b2b40;
     --text: #e9f2fb;
     --muted: #a3bacf;
     --primary: #6aa2ff;
@@ -24,6 +29,7 @@
     --border: #2a3d54;
     --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+    --ring: rgba(106, 162, 255, 0.28);
 }
 
 * {
@@ -64,12 +70,12 @@ img {
 }
 
 .section {
-    padding: 4.5rem 0;
+    padding: 5rem 0;
 }
 
 .section-head {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.3rem;
 }
 
 .section-head h2 {
@@ -79,12 +85,14 @@ img {
 
 .section-head p {
     color: var(--muted);
+    max-width: 640px;
+    margin: 0 auto;
 }
 
 .card {
-    background: var(--surface);
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--shadow);
 }
 
@@ -231,14 +239,57 @@ img {
     background: rgba(31, 111, 235, 0.1);
 }
 
-.theme-toggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+.theme-switch {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.theme-switch-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.theme-switch-slider {
+    width: 56px;
+    height: 32px;
+    border-radius: 999px;
     border: 1px solid var(--border);
     background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    color: var(--muted);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-switch-slider::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.theme-switch-slider i {
+    font-size: 0.74rem;
+    z-index: 1;
+}
+
+.theme-switch-input:checked + .theme-switch-slider::after {
+    transform: translateX(24px);
+}
+
+.theme-switch-input:focus-visible + .theme-switch-slider {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }
 
 .nav-appointment {
@@ -252,28 +303,44 @@ img {
     position: sticky;
     top: 63px;
     z-index: 1100;
+    box-shadow: 0 10px 22px rgba(190, 24, 42, 0.32);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .emergency-inner {
-    min-height: 52px;
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
     flex-wrap: wrap;
-    padding: 0.4rem 0;
+    padding: 0.5rem 0;
 }
 
-.emergency-inner p {
+.emergency-text {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
+    gap: 0.55rem;
+    font-weight: 800;
+    font-size: clamp(1.02rem, 2.2vw, 1.22rem);
+    letter-spacing: 0.2px;
+}
+
+.emergency-text i {
+    font-size: 1.15rem;
+    animation: emergencyPulse 1.6s ease-in-out infinite;
 }
 
 .emergency-btn {
     background: #fff;
     color: #a10d1e;
+    font-weight: 800;
+    min-width: 220px;
+}
+
+.emergency-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 .hero {
@@ -299,6 +366,42 @@ img {
     z-index: 2;
     padding-top: 6rem;
     padding-bottom: 4rem;
+}
+
+.hero-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.hero-copy {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.hero-visual {
+    opacity: 0;
+    transform: translateY(24px);
+    justify-self: center;
+    width: min(480px, 100%);
+}
+
+.hero-visual img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: var(--shadow-lg);
+}
+
+.hero.hero-ready .hero-copy {
+    animation: heroFadeIn 0.95s ease-out forwards;
+}
+
+.hero.hero-ready .hero-visual {
+    animation: heroFadeIn 0.95s ease-out 0.12s forwards;
 }
 
 .kicker {
@@ -395,7 +498,7 @@ img {
 .footer-grid,
 .contact-wrap {
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .stats-grid {
@@ -422,17 +525,76 @@ img {
 }
 
 .card-grid.six {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .card-grid.four {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.departments,
+.services,
+.testimonials,
+.contact {
+    background: var(--bg-soft);
+}
+
+.departments {
+    --section-tint: rgba(18, 115, 212, 0.06);
+    --section-accent-a: #1876d1;
+    --section-accent-b: #1b9fcf;
+    --section-border: rgba(24, 118, 209, 0.32);
+}
+
+.doctors {
+    --section-tint: rgba(18, 143, 147, 0.06);
+    --section-accent-a: #148d93;
+    --section-accent-b: #1aa7a0;
+    --section-border: rgba(20, 141, 147, 0.34);
+}
+
+.services {
+    --section-tint: rgba(14, 132, 172, 0.06);
+    --section-accent-a: #0f86b0;
+    --section-accent-b: #19a2cb;
+    --section-border: rgba(15, 134, 176, 0.34);
 }
 
 .department-card,
 .doctor-card,
 .service-card {
-    padding: 1.2rem;
+    padding: 1.35rem;
+    display: grid;
+    align-content: start;
+    gap: 0.45rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.department-card {
+    background: linear-gradient(180deg, var(--surface), rgba(24, 118, 209, 0.06));
+}
+
+.doctor-card {
+    background: linear-gradient(180deg, var(--surface), rgba(20, 141, 147, 0.06));
+}
+
+.service-card {
+    background: linear-gradient(180deg, var(--surface), rgba(15, 134, 176, 0.06));
+}
+
+.department-card::before,
+.doctor-card::before,
+.service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--section-accent-a, var(--primary)), var(--section-accent-b, var(--accent)));
+    opacity: 0;
+    transition: opacity 0.24s ease;
 }
 
 .department-card:hover,
@@ -443,20 +605,45 @@ img {
 .gallery-grid button:hover,
 .map-card:hover,
 .contact-wrap .card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
+}
+
+.department-card:hover,
+.doctor-card:hover,
+.service-card:hover {
+    border-color: var(--section-border, rgba(31, 111, 235, 0.42));
+}
+
+.department-card:hover::before,
+.doctor-card:hover::before,
+.service-card:hover::before {
+    opacity: 1;
 }
 
 .department-card i,
 .service-card i {
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
     display: grid;
     place-items: center;
     color: #fff;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    background: linear-gradient(135deg, var(--section-accent-a, var(--primary)), var(--section-accent-b, var(--accent)));
     margin-bottom: 0.7rem;
+    box-shadow: 0 10px 18px var(--section-tint, rgba(31, 111, 235, 0.24));
+}
+
+.doctor-card::after {
+    content: '';
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--section-accent-a), var(--section-accent-b));
+    box-shadow: 0 0 0 4px rgba(20, 141, 147, 0.16);
 }
 
 .department-card p,
@@ -464,27 +651,52 @@ img {
 .doctor-card p {
     color: var(--muted);
     font-size: 0.95rem;
+    margin-top: 0.1rem;
 }
 
 .doctor-card img {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
+    width: 86px;
+    height: 86px;
+    border-radius: 18px;
     object-fit: cover;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.85rem;
+    border: 2px solid rgba(20, 141, 147, 0.25);
 }
 
-.doctor-meta {
-    display: inline-block;
-    margin-top: 0.45rem;
-    font-size: 0.8rem;
-    color: var(--primary);
+.doctor-card h3 {
+    margin-bottom: 0.3rem;
+    font-size: 1.06rem;
+}
+
+.doctor-specialization {
+    color: var(--muted);
+    font-size: 0.93rem;
+    margin-bottom: 0.4rem;
+}
+
+.doctor-experience {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+    font-size: 0.84rem;
+    color: #148d93;
     font-weight: 700;
 }
 
-.doctor-card .btn {
-    margin-top: 0.75rem;
+.doctor-cta {
+    margin-top: 0.85rem;
     width: 100%;
+    background: linear-gradient(135deg, #148d93, #1aa7a0);
+}
+
+.doctor-card {
+    text-align: center;
+    justify-items: center;
+}
+
+.doctor-card:hover {
+    transform: translateY(-8px) scale(1.02);
 }
 
 .slider {
@@ -507,6 +719,18 @@ img {
     min-width: 100%;
     padding: 1.4rem;
     text-align: center;
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+.testimonial-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 0.45rem;
+    left: 0.9rem;
+    font-size: 2.2rem;
+    color: rgba(31, 111, 235, 0.2);
+    font-weight: 700;
 }
 
 .testimonial-card img {
@@ -535,6 +759,13 @@ img {
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.slider-btn:hover {
+    transform: translateY(-2px);
+    background: var(--primary);
+    color: #fff;
 }
 
 .slider-dots {
@@ -551,6 +782,7 @@ img {
     border: none;
     background: #c8d6e7;
     cursor: pointer;
+    transition: width 0.25s ease, background-color 0.25s ease;
 }
 
 .slider-dots button.active {
@@ -569,6 +801,7 @@ img {
     box-shadow: var(--shadow);
     background: var(--surface);
     cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .gallery-grid img {
@@ -580,6 +813,11 @@ img {
 
 .gallery-grid button:hover img {
     transform: scale(1.08);
+}
+
+.gallery-grid button:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .map-card {
@@ -616,7 +854,7 @@ img {
 }
 
 .contact-wrap .card {
-    padding: 1.2rem;
+    padding: 1.4rem;
 }
 
 .contact-form {
@@ -624,13 +862,64 @@ img {
     gap: 0.6rem;
 }
 
-.contact-form input {
+.appointment-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
+
+.field-wrap {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.field-wrap label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.contact-form input,
+.contact-form select {
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     border-radius: 10px;
     padding: 0.7rem 0.8rem;
     font: inherit;
+}
+
+.contact-form input:focus,
+.contact-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--ring);
+}
+
+.field-error {
+    min-height: 1rem;
+    font-size: 0.75rem;
+    color: var(--danger);
+}
+
+.input-invalid {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 3px rgba(214, 40, 57, 0.12) !important;
+}
+
+.booking-confirmation {
+    display: none;
+    margin-top: 0.35rem;
+    border: 1px solid #9ddfc6;
+    background: #eafaf3;
+    color: #1d6a4f;
+    border-radius: 10px;
+    padding: 0.7rem 0.8rem;
+    font-size: 0.88rem;
+}
+
+.booking-confirmation.show {
+    display: block;
 }
 
 .footer {
@@ -681,20 +970,32 @@ img {
     inset: 0;
     background: rgba(5, 15, 24, 0.92);
     z-index: 2600;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    display: flex;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
 }
 
 .lightbox.show {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .lightbox img {
     max-width: min(960px, 88vw);
     max-height: 84vh;
     border-radius: 12px;
+    transform: scale(0.96);
+    transition: transform 0.28s ease;
+}
+
+.lightbox.show img {
+    transform: scale(1);
 }
 
 .lightbox-close,
@@ -707,6 +1008,13 @@ img {
     background: rgba(255, 255, 255, 0.18);
     color: #fff;
     cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-1px);
 }
 
 .lightbox-close { top: 16px; right: 16px; font-size: 1.8rem; }
@@ -722,6 +1030,40 @@ img {
     0% { opacity: 0; transform: translateY(0); }
     40% { opacity: 1; }
     100% { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes emergencyPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.12);
+        opacity: 0.82;
+    }
+}
+
+@media (max-width: 620px) {
+    .emergency-inner {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .emergency-btn {
+        width: 100%;
+    }
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (min-width: 768px) {
@@ -764,11 +1106,20 @@ img {
     .contact-wrap {
         grid-template-columns: 1fr 1fr;
     }
+
+    .appointment-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-layout {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2rem;
+    }
 }
 
 @media (min-width: 1024px) {
     .section {
-        padding: 5.5rem 0;
+        padding: 6rem 0;
     }
 
     .hero-content {
