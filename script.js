@@ -24,6 +24,51 @@ const translations = {
 
 let currentLanguage = 'en';
 
+const doctorProfiles = [
+    {
+        name: 'Prof. Dr. Md. Abul Kenan',
+        designation: 'Director & Professor',
+        specialization: 'Orthopedic Surgery',
+        experience: '22 years experience',
+        image: 'https://via.placeholder.com/160x160?text=Dr+Kenan'
+    },
+    {
+        name: 'Prof. Dr. Md. Tofayel Hossain',
+        designation: 'Professor',
+        specialization: 'Trauma Surgery',
+        experience: '20 years experience',
+        image: 'https://via.placeholder.com/160x160?text=Dr+Tofayel'
+    },
+    {
+        name: 'Dr. G. M. Jahangir Hossain',
+        designation: 'Senior Consultant',
+        specialization: 'Orthopedic Surgery',
+        experience: '18 years experience',
+        image: 'https://via.placeholder.com/160x160?text=Dr+Jahangir'
+    },
+    {
+        name: 'Dr. Farhana Sultana',
+        designation: 'Consultant',
+        specialization: 'Trauma Surgery',
+        experience: '14 years experience',
+        image: 'https://via.placeholder.com/160x160?text=Dr+Farhana'
+    },
+    {
+        name: 'Dr. Kamal Uddin',
+        designation: 'Rehabilitation Specialist',
+        specialization: 'Physical Medicine & Rehabilitation',
+        experience: '16 years experience',
+        image: 'https://via.placeholder.com/160x160?text=Dr+Kamal'
+    },
+    {
+        name: 'Dr. Tania Chowdhury',
+        designation: 'Consultant Physician',
+        specialization: 'General Medicine',
+        experience: '12 years experience',
+        image: 'https://via.placeholder.com/160x160?text=Dr+Tania'
+    }
+];
+
 // ============================================
 // NAVIGATION FUNCTIONALITY
 // ============================================
@@ -31,6 +76,8 @@ let currentLanguage = 'en';
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
+
+    renderDoctorProfiles();
 
     // Mobile menu toggle
     if (hamburger) {
@@ -152,6 +199,143 @@ function callEmergency() {
     // Alternatively: window.location.href = 'tel:+8802550589 02';
 }
 
+function renderDoctorProfiles() {
+    const doctorGrid = document.getElementById('doctorProfilesGrid');
+    if (!doctorGrid) {
+        return;
+    }
+
+    doctorGrid.innerHTML = doctorProfiles.map(profile => `
+        <article class="doctor-card">
+            <div class="doctor-image">
+                <img src="${profile.image}" alt="${profile.name}">
+            </div>
+            <h3>${profile.name}</h3>
+            <p class="designation">${profile.designation}</p>
+            <p class="specialty">${profile.specialization}</p>
+            <p class="experience"><i class="fas fa-award"></i>${profile.experience}</p>
+            <button
+                type="button"
+                class="btn btn-primary doctor-book-btn"
+                data-name="${profile.name}"
+                data-department="${profile.specialization}">
+                Book Appointment
+            </button>
+        </article>
+    `).join('');
+
+    doctorGrid.querySelectorAll('.doctor-book-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const doctorName = this.getAttribute('data-name');
+            const departmentName = this.getAttribute('data-department');
+            bookDoctorAppointment(doctorName, departmentName);
+        });
+    });
+}
+
+function bookDoctorAppointment(doctorName, departmentName) {
+    scrollToAppointment();
+
+    const departmentSelect = document.getElementById('department');
+    const doctorSelect = document.getElementById('doctor');
+
+    if (departmentSelect && doctorSelect) {
+        departmentSelect.value = departmentName;
+        updateDoctorOptions(departmentSelect, doctorSelect);
+
+        if ([...doctorSelect.options].some(option => option.value === doctorName)) {
+            doctorSelect.value = doctorName;
+        }
+    }
+}
+
+const doctorDirectory = {
+    'Orthopedic Surgery': [
+        'Prof. Dr. Md. Abul Kenan',
+        'Dr. G. M. Jahangir Hossain'
+    ],
+    'Trauma Surgery': [
+        'Prof. Dr. Md. Tofayel Hossain',
+        'Dr. Farhana Sultana'
+    ],
+    'Physical Medicine & Rehabilitation': [
+        'Dr. Kamal Uddin',
+        'Dr. Shahida Akter'
+    ],
+    Cardiology: [
+        'Dr. Nabil Ahmed',
+        'Dr. Muntaha Rahman'
+    ],
+    'General Medicine': [
+        'Dr. Hasan Mahmud',
+        'Dr. Tania Chowdhury'
+    ]
+};
+
+function setFieldError(field, message) {
+    const errorElement = document.getElementById(`${field.id}Error`);
+    field.classList.add('input-error');
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+function clearFieldError(field) {
+    const errorElement = document.getElementById(`${field.id}Error`);
+    field.classList.remove('input-error');
+    if (errorElement) {
+        errorElement.textContent = '';
+    }
+}
+
+function clearAppointmentErrors(fields) {
+    Object.values(fields).forEach(field => clearFieldError(field));
+}
+
+function updateDoctorOptions(departmentSelect, doctorSelect) {
+    const selectedDepartment = departmentSelect.value;
+    const doctors = doctorDirectory[selectedDepartment] || [];
+
+    doctorSelect.innerHTML = '';
+
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = doctors.length ? 'Select Doctor' : 'Select Department First';
+    doctorSelect.appendChild(placeholder);
+
+    doctors.forEach(doctor => {
+        const option = document.createElement('option');
+        option.value = doctor;
+        option.textContent = doctor;
+        doctorSelect.appendChild(option);
+    });
+
+    doctorSelect.disabled = doctors.length === 0;
+}
+
+function renderAppointmentConfirmation(appointmentData) {
+    const confirmationBox = document.getElementById('appointmentConfirmation');
+    if (!confirmationBox) {
+        return;
+    }
+
+    const dateText = new Date(appointmentData.date).toLocaleDateString('en-BD', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    confirmationBox.innerHTML = `
+        <strong>Appointment booked successfully.</strong><br>
+        Patient: ${appointmentData.patientName}<br>
+        Phone: ${appointmentData.phoneNumber}<br>
+        Department: ${appointmentData.department}<br>
+        Doctor: ${appointmentData.doctor}<br>
+        Date & Time: ${dateText}, ${appointmentData.time}
+    `;
+    confirmationBox.classList.add('show');
+}
+
 // ============================================
 // FORM HANDLING
 // ============================================
@@ -160,52 +344,136 @@ function handleFormSubmissions() {
     // Appointment Form
     const appointmentForm = document.getElementById('appointmentForm');
     if (appointmentForm) {
-        appointmentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const inputs = this.querySelectorAll('input, select');
-            const formData = {
-                name: inputs[0].value,
-                email: inputs[1].value,
-                phone: inputs[2].value,
-                department: inputs[3].value,
-                date: inputs[4].value,
-            };
+        const patientName = document.getElementById('patientName');
+        const phoneNumber = document.getElementById('phoneNumber');
+        const department = document.getElementById('department');
+        const doctor = document.getElementById('doctor');
+        const appointmentDate = document.getElementById('appointmentDate');
+        const appointmentTime = document.getElementById('appointmentTime');
+        const confirmationBox = document.getElementById('appointmentConfirmation');
 
-            // Validate form
-            if (!formData.name || !formData.email || !formData.phone || !formData.department || !formData.date) {
-                alert('❌ Please fill in all fields');
+        const appointmentFields = {
+            patientName,
+            phoneNumber,
+            department,
+            doctor,
+            appointmentDate,
+            appointmentTime
+        };
+
+        const today = new Date();
+        const minDate = today.toISOString().split('T')[0];
+        if (appointmentDate) {
+            appointmentDate.min = minDate;
+        }
+
+        if (department && doctor) {
+            updateDoctorOptions(department, doctor);
+            department.addEventListener('change', function() {
+                updateDoctorOptions(department, doctor);
+                clearFieldError(department);
+                clearFieldError(doctor);
+            });
+        }
+
+        Object.values(appointmentFields).forEach(field => {
+            if (!field) {
                 return;
             }
 
-            // Show success message
-            const successMsg = `
-✅ APPOINTMENT BOOKED SUCCESSFULLY!
+            field.addEventListener('input', function() {
+                clearFieldError(field);
+            });
 
-Details:
-─────────────────────
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Department: ${formData.department}
-Date: ${formData.date}
+            field.addEventListener('change', function() {
+                clearFieldError(field);
+            });
+        });
 
-You will receive a confirmation email shortly.
-Our team will contact you if any changes are needed.
+        appointmentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearAppointmentErrors(appointmentFields);
 
-Thank you for choosing NITOR!
-            `;
-            
-            alert(successMsg);
-            
-            // Reset form
-            this.reset();
-            
-            // Store in localStorage for demo purposes
+            if (confirmationBox) {
+                confirmationBox.classList.remove('show');
+                confirmationBox.textContent = '';
+            }
+
+            let isValid = true;
+            const firstErrorField = [];
+
+            const nameValue = patientName.value.trim();
+            if (!nameValue || nameValue.length < 2) {
+                isValid = false;
+                setFieldError(patientName, 'Enter a valid patient name.');
+                firstErrorField.push(patientName);
+            }
+
+            const phoneValue = phoneNumber.value.trim();
+            if (!/^\+?\d{10,15}$/.test(phoneValue)) {
+                isValid = false;
+                setFieldError(phoneNumber, 'Enter a valid phone number (10-15 digits).');
+                firstErrorField.push(phoneNumber);
+            }
+
+            if (!department.value) {
+                isValid = false;
+                setFieldError(department, 'Please select a department.');
+                firstErrorField.push(department);
+            }
+
+            if (!doctor.value) {
+                isValid = false;
+                setFieldError(doctor, 'Please select a doctor.');
+                firstErrorField.push(doctor);
+            }
+
+            if (!appointmentDate.value) {
+                isValid = false;
+                setFieldError(appointmentDate, 'Please select a date.');
+                firstErrorField.push(appointmentDate);
+            } else {
+                const selectedDate = new Date(`${appointmentDate.value}T00:00:00`);
+                const todayDate = new Date();
+                todayDate.setHours(0, 0, 0, 0);
+                if (selectedDate < todayDate) {
+                    isValid = false;
+                    setFieldError(appointmentDate, 'Date cannot be in the past.');
+                    firstErrorField.push(appointmentDate);
+                }
+            }
+
+            if (!appointmentTime.value) {
+                isValid = false;
+                setFieldError(appointmentTime, 'Please select a time.');
+                firstErrorField.push(appointmentTime);
+            }
+
+            if (!isValid) {
+                if (firstErrorField.length > 0) {
+                    firstErrorField[0].focus();
+                }
+                return;
+            }
+
+            const formData = {
+                patientName: nameValue,
+                phoneNumber: phoneValue,
+                department: department.value,
+                doctor: doctor.value,
+                date: appointmentDate.value,
+                time: appointmentTime.value,
+                timestamp: new Date().toISOString()
+            };
+
             const appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-            appointments.push({...formData, timestamp: new Date().toISOString()});
+            appointments.push(formData);
             localStorage.setItem('appointments', JSON.stringify(appointments));
+
+            renderAppointmentConfirmation(formData);
+
+            this.reset();
+            updateDoctorOptions(department, doctor);
         });
     }
 
@@ -310,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe cards for animation
-    document.querySelectorAll('.service-card, .dept-card, .doctor-card, .news-card, .stat-card').forEach(card => {
+    document.querySelectorAll('.service-card, .dept-card, .doctor-card, .news-card, .stat-card, .hospital-stat-card').forEach(card => {
         card.style.opacity = '0';
         observer.observe(card);
     });
@@ -346,37 +614,55 @@ window.addEventListener('scroll', function() {
 // ============================================
 
 function animateCounters() {
-    const statCards = document.querySelectorAll('.stat-card h3');
-    
+    const counters = document.querySelectorAll('.counter-value');
+    if (counters.length === 0) {
+        return;
+    }
+
     const observerOptions = {
-        threshold: 0.5
+        threshold: 0.35
     };
 
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && entry.target.dataset.counted !== 'true') {
                 const element = entry.target;
-                const target = parseInt(element.textContent);
-                const increment = target / 50;
-                let current = 0;
+                const target = Number(element.dataset.counterTarget || '0');
+                const suffix = element.dataset.counterSuffix || '';
+                const useCommaFormat = element.dataset.counterFormat === 'comma';
+                const duration = 1500;
+                const startTime = performance.now();
 
-                const counter = setInterval(function() {
-                    current += increment;
-                    if (current >= target) {
-                        element.textContent = target + '+';
-                        clearInterval(counter);
+                function updateCounter(currentTime) {
+                    const elapsed = Math.min((currentTime - startTime) / duration, 1);
+                    const eased = 1 - Math.pow(1 - elapsed, 3);
+                    const currentValue = Math.floor(target * eased);
+                    const formattedValue = useCommaFormat
+                        ? currentValue.toLocaleString('en-US')
+                        : String(currentValue);
+
+                    element.textContent = `${formattedValue}${suffix}`;
+
+                    if (elapsed < 1) {
+                        requestAnimationFrame(updateCounter);
                     } else {
-                        element.textContent = Math.floor(current) + '+';
+                        const finalValue = useCommaFormat
+                            ? target.toLocaleString('en-US')
+                            : String(target);
+                        element.textContent = `${finalValue}${suffix}`;
+                        element.dataset.counted = 'true';
                     }
-                }, 30);
+                }
+
+                requestAnimationFrame(updateCounter);
 
                 observer.unobserve(element);
             }
         });
     }, observerOptions);
 
-    statCards.forEach(card => {
-        observer.observe(card);
+    counters.forEach(counter => {
+        observer.observe(counter);
     });
 }
 

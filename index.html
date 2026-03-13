@@ -53,40 +53,102 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h2>Excellence in Trauma Care & Orthopedic Rehabilitation</h2>
-            <p>Providing world-class healthcare services with compassion and expertise</p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="scrollToAppointment()">Book Appointment</button>
-                <button class="btn btn-secondary" onclick="callEmergency()">Emergency: +88-02-55058902</button>
+    <!-- Emergency Help Banner -->
+    <section class="emergency-banner" aria-label="Emergency help information">
+        <div class="container emergency-banner-content">
+            <div class="emergency-banner-text">
+                <i class="fas fa-triangle-exclamation"></i>
+                <p>Emergency Help Available 24/7</p>
             </div>
-            <div class="hero-image">
-                <img src="https://via.placeholder.com/500x300?text=NITOR+Hospital" alt="NITOR Hospital" style="max-width: 500px;">
-            </div>
+            <a href="tel:+880255058902" class="emergency-call-btn" aria-label="Call emergency number +88-02-55058902">
+                <i class="fas fa-phone-volume"></i>
+                <span>+88-02-55058902</span>
+            </a>
         </div>
-        <div class="hero-overlay"></div>
     </section>
 
-    <!-- Quick Stats -->
-    <section class="stats-section">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-icons" aria-hidden="true">
+            <span class="float-icon icon-1"><i class="fas fa-heartbeat"></i></span>
+            <span class="float-icon icon-2"><i class="fas fa-stethoscope"></i></span>
+            <span class="float-icon icon-3"><i class="fas fa-briefcase-medical"></i></span>
+            <span class="float-icon icon-4"><i class="fas fa-user-doctor"></i></span>
+        </div>
+
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="hero-badge">Trusted Advanced Healthcare Campus</span>
+                <h2 class="hero-title">Premium Trauma, Orthopedic, and Rehabilitation Care</h2>
+                <p class="hero-lead">NITOR delivers expert-led treatment, rapid emergency response, and modern recovery pathways for every patient journey.</p>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary hero-cta" onclick="scrollToAppointment()">Book Appointment</button>
+                    <button class="btn btn-secondary hero-cta-outline" onclick="callEmergency()">Emergency: +88-02-55058902</button>
+                </div>
+
+                <div class="hero-stats" aria-label="Hospital statistics highlights">
+                    <div class="stat-card hero-stat-card">
+                        <h3>120+</h3>
+                        <p>Specialist Doctors</p>
+                    </div>
+                    <div class="stat-card hero-stat-card">
+                        <h3>35000+</h3>
+                        <p>Patients Served Yearly</p>
+                    </div>
+                    <div class="stat-card hero-stat-card">
+                        <h3>900+</h3>
+                        <p>Beds & Recovery Units</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="hero-panel" aria-label="Hospital quality highlights">
+                <h3>Why Patients Choose NITOR</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> 24/7 trauma and emergency teams</li>
+                    <li><i class="fas fa-check-circle"></i> Multidisciplinary specialist consultation</li>
+                    <li><i class="fas fa-check-circle"></i> Modern diagnostics and surgical support</li>
+                    <li><i class="fas fa-check-circle"></i> Recovery-first rehabilitation programs</li>
+                </ul>
+            </aside>
+        </div>
+
+        <a href="#services" class="scroll-indicator" aria-label="Scroll to services section">
+            <span></span>
+        </a>
+    </section>
+
+    <!-- Hospital Statistics Counter -->
+    <section class="hospital-stats" id="hospital-stats">
         <div class="container">
-            <div class="stat-card">
-                <h3>250+</h3>
-                <p>Emergency Patients Daily</p>
-            </div>
-            <div class="stat-card">
-                <h3>1000+</h3>
-                <p>OPD Patients Daily</p>
-            </div>
-            <div class="stat-card">
-                <h3>100+</h3>
-                <p>Major Operations</p>
-            </div>
-            <div class="stat-card">
-                <h3>50+</h3>
-                <p>Specialist Doctors</p>
+            <h2>Hospital Statistics</h2>
+            <p class="section-subtitle">Transparent impact metrics from our care network</p>
+
+            <div class="hospital-stats-grid">
+                <article class="hospital-stat-card">
+                    <div class="hospital-stat-icon"><i class="fas fa-user-doctor"></i></div>
+                    <h3><span class="counter-value" data-counter-target="150" data-counter-suffix="+">0</span></h3>
+                    <p>Doctors</p>
+                </article>
+
+                <article class="hospital-stat-card">
+                    <div class="hospital-stat-icon"><i class="fas fa-bed"></i></div>
+                    <h3><span class="counter-value" data-counter-target="500" data-counter-suffix="+">0</span></h3>
+                    <p>Beds</p>
+                </article>
+
+                <article class="hospital-stat-card">
+                    <div class="hospital-stat-icon"><i class="fas fa-hospital-user"></i></div>
+                    <h3><span class="counter-value" data-counter-target="1000000" data-counter-format="comma" data-counter-suffix="+">0</span></h3>
+                    <p>Patients Treated</p>
+                </article>
+
+                <article class="hospital-stat-card">
+                    <div class="hospital-stat-icon"><i class="fas fa-ambulance"></i></div>
+                    <h3><span class="counter-value" data-counter-target="24" data-counter-suffix="/7">0</span></h3>
+                    <p>Emergency Units</p>
+                </article>
             </div>
         </div>
     </section>
@@ -177,45 +239,9 @@
     <section class="doctors" id="doctors">
         <div class="container">
             <h2>Our Medical Team</h2>
-            <p class="section-subtitle">Experienced and dedicated healthcare professionals</p>
-            
-            <div class="doctors-grid">
-                <div class="doctor-card">
-                    <div class="doctor-image">
-                        <img src="https://via.placeholder.com/100x100?text=Dr+Abul+Kenan" alt="Prof. Dr. Md. Abul Kenan">
-                    </div>
-                    <h3>Prof. Dr. Md. Abul Kenan</h3>
-                    <p class="designation">Director & Professor</p>
-                    <p class="specialty">Orthopedic Surgery</p>
-                </div>
-                
-                <div class="doctor-card">
-                    <div class="doctor-image">
-                        <img src="https://via.placeholder.com/100x100?text=Dr+Tofayel" alt="Prof. Dr. Md. Tofayel Hossain">
-                    </div>
-                    <h3>Prof. Dr. Md. Tofayel Hossain</h3>
-                    <p class="designation">Professor</p>
-                    <p class="specialty">Trauma Surgery</p>
-                </div>
-                
-                <div class="doctor-card">
-                    <div class="doctor-image">
-                        <img src="https://via.placeholder.com/100x100?text=Dr+Jahangir" alt="Dr. G. M. Jahangir Hossain">
-                    </div>
-                    <h3>Dr. G. M. Jahangir Hossain</h3>
-                    <p class="designation">Professor</p>
-                    <p class="specialty">Orthopedic Surgery</p>
-                </div>
-                
-                <div class="doctor-card">
-                    <div class="doctor-image">
-                        <img src="https://via.placeholder.com/100x100?text=Dr+Kamruzzaman" alt="Prof. Dr. Md. Kamruzzaman">
-                    </div>
-                    <h3>Prof. Dr. Md. Kamruzzaman</h3>
-                    <p class="designation">Professor</p>
-                    <p class="specialty">Orthopedic Surgery</p>
-                </div>
-            </div>
+            <p class="section-subtitle">Meet our specialists with deep experience in trauma, surgery, and rehabilitation care</p>
+
+            <div class="doctors-grid" id="doctorProfilesGrid" aria-live="polite"></div>
         </div>
     </section>
 
@@ -227,31 +253,58 @@
                     <h2>Book Your Appointment</h2>
                     <p>Get registered and schedule your consultation with our specialists</p>
                     
-                    <form id="appointmentForm">
-                        <div class="form-group">
-                            <input type="text" placeholder="Full Name" required>
+                    <form id="appointmentForm" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="patientName">Patient Name</label>
+                                <input id="patientName" name="patientName" type="text" placeholder="Enter patient name" autocomplete="name" required>
+                                <small class="field-error" id="patientNameError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="e.g. 01712345678" autocomplete="tel" required>
+                                <small class="field-error" id="phoneNumberError"></small>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Email Address" required>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select id="department" name="department" required>
+                                    <option value="">Select Department</option>
+                                    <option value="Orthopedic Surgery">Orthopedic Surgery</option>
+                                    <option value="Trauma Surgery">Trauma Surgery</option>
+                                    <option value="Physical Medicine & Rehabilitation">Physical Medicine & Rehabilitation</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="General Medicine">General Medicine</option>
+                                </select>
+                                <small class="field-error" id="departmentError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="doctor">Doctor</label>
+                                <select id="doctor" name="doctor" required disabled>
+                                    <option value="">Select Department First</option>
+                                </select>
+                                <small class="field-error" id="doctorError"></small>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="tel" placeholder="Phone Number" required>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointmentDate">Date</label>
+                                <input id="appointmentDate" name="appointmentDate" type="date" required>
+                                <small class="field-error" id="appointmentDateError"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointmentTime">Time</label>
+                                <input id="appointmentTime" name="appointmentTime" type="time" required>
+                                <small class="field-error" id="appointmentTimeError"></small>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <select required>
-                                <option>Select Department</option>
-                                <option>Orthopedic Surgery</option>
-                                <option>Trauma Surgery</option>
-                                <option>Physical Medicine & Rehabilitation</option>
-                                <option>Cardiology</option>
-                                <option>General Medicine</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="date" required>
-                        </div>
+
                         <button type="submit" class="btn btn-primary">Book Appointment</button>
                     </form>
+                    <div id="appointmentConfirmation" class="confirmation-message" role="status" aria-live="polite"></div>
                 </div>
                 
                 <div class="appointment-info">
